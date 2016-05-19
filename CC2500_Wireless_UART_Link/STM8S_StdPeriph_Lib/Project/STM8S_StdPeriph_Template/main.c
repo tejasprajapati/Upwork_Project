@@ -90,9 +90,26 @@ void main(void)
 
   /* SPI configuration */
   SPI_DeInit();
+  
+  /* Set the MOSI,MISO and SCK at high level */
+  GPIO_ExternalPullUpConfig(GPIOC, (GPIO_Pin_TypeDef)(GPIO_PIN_7 | GPIO_PIN_6 | \
+                            GPIO_PIN_5), ENABLE);
+
+  /* SD_SPI Configuration */
+  SPI_Init( SPI_FIRSTBIT_MSB, SPI_BAUDRATEPRESCALER_4, SPI_MODE_MASTER,
+           SPI_CLOCKPOLARITY_HIGH, SPI_CLOCKPHASE_2EDGE, SPI_DATADIRECTION_2LINES_FULLDUPLEX,
+           SPI_NSS_SOFT, 0x07);
+
+
+  /* SD_SPI enable */
+  SPI_Cmd( ENABLE);
+
+  /* Set MSD ChipSelect pin in Output push-pull high level */
+  GPIO_Init(GPIOC, GPIO_PIN_4 , GPIO_MODE_OUT_PP_HIGH_SLOW);
+  
   /* Initialize SPI in Slave mode  */
-  SPI_Init(SPI_FIRSTBIT_LSB, SPI_BAUDRATEPRESCALER_2, SPI_MODE_SLAVE, SPI_CLOCKPOLARITY_LOW,
-           SPI_CLOCKPHASE_1EDGE, SPI_DATADIRECTION_2LINES_FULLDUPLEX, SPI_NSS_SOFT,(uint8_t)0x07);
+//  SPI_Init(SPI_FIRSTBIT_LSB, SPI_BAUDRATEPRESCALER_2, SPI_MODE_SLAVE, SPI_CLOCKPOLARITY_LOW,
+//           SPI_CLOCKPHASE_1EDGE, SPI_DATADIRECTION_2LINES_FULLDUPLEX, SPI_NSS_SOFT,(uint8_t)0x07);
 
   /* Enable the UART1*/
   UART1_Cmd(ENABLE);
@@ -100,7 +117,7 @@ void main(void)
 	Delay(0xFFF);
   
 	/* Enable the SPI*/
-  SPI_Cmd(ENABLE);
+//  SPI_Cmd(ENABLE);
   
     while (NbrOfDataToRead--)
     {
