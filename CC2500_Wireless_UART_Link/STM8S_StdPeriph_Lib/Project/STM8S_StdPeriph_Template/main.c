@@ -68,26 +68,6 @@ void main(void)
 {
    /*High speed internal clock prescaler: 1*/
    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
-
-   /* UART1 configuration -------------------------------------------------------*/
-   /* UART1 configured as follow:
-          - Word Length = 8 Bits
-          - 1 Stop Bit
-          - No parity
-          - BaudRate = 9600 baud
-          - UART1 Clock enabled
-          - Polarity Low
-          - Phase Middle
-          - Last Bit enabled
-          - Receive and transmit enabled
-   */
-  UART1_DeInit();
-  
-  UART1_Init((uint32_t)9600, UART1_WORDLENGTH_8D, UART1_STOPBITS_1, UART1_PARITY_NO, 
-              (UART1_SyncMode_TypeDef)(UART1_SYNCMODE_CLOCK_ENABLE | UART1_SYNCMODE_CPOL_LOW |UART1_SYNCMODE_CPHA_MIDDLE |UART1_SYNCMODE_LASTBIT_ENABLE),
-              UART1_MODE_TXRX_ENABLE);
-  UART1_Cmd(DISABLE);
-
   /* SPI configuration */
   SPI_DeInit();
   
@@ -110,9 +90,6 @@ void main(void)
   /* Initialize SPI in Slave mode  */
 //  SPI_Init(SPI_FIRSTBIT_LSB, SPI_BAUDRATEPRESCALER_2, SPI_MODE_SLAVE, SPI_CLOCKPOLARITY_LOW,
 //           SPI_CLOCKPHASE_1EDGE, SPI_DATADIRECTION_2LINES_FULLDUPLEX, SPI_NSS_SOFT,(uint8_t)0x07);
-
-  /* Enable the UART1*/
-  UART1_Cmd(ENABLE);
   
 	Delay(0xFFF);
   

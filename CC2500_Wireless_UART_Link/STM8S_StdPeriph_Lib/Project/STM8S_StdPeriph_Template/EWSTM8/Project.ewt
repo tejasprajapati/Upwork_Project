@@ -8816,6 +8816,33 @@
       <name>$PROJ_DIR$\..\stm8s_it.c</name>
     </file>
   </group>
+  <file>
+    <name>$PROJ_DIR$\..\cc2500.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\..\global.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\..\main_smrt_hm.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\..\main_upwork_rb.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\..\rad.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\..\stm8l15x_it.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\..\stm8l15x_it.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\..\uart.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\..\uart.h</name>
+  </file>
 </project>
 
 
