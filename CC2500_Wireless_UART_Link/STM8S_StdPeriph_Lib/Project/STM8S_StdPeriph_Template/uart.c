@@ -18,7 +18,7 @@ void uart_init(baudrate)
   UART1_Cmd(ENABLE);  
 }
 
-void send_data_uart(uart_send_buff)
+void send_data_uart(char *uart_send_buff)
 {
   while(uart_send_buff[index] != '\0')
   {

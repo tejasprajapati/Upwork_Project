@@ -1,5 +1,5 @@
 #include "rad.h"
-#include "stm8l15x_spi.h"
+#include "stm8s_spi.h"
 #include "string.h"
 
 extern unsigned char *tx_id;
@@ -19,15 +19,16 @@ char Read(char add)
 
 	ss_low;    //lo
 
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_TXE)== RESET);
-	SPI_SendData(SPI1, add); // putcSPI1(add);         			//SEND ADR BYTE
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_RXNE) == RESET);
-	y = SPI_ReceiveData(SPI1);
+        while (SPI_GetFlagStatus(SPI_FLAG_TXE)== RESET);
+        SPI_SendData(add);
+	/*SPI_SendData(SPI1, add);                                              SEND ADR BYTE*/
+        while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET);
+	y = SPI_ReceiveData();
 
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_TXE)== RESET);
-	SPI_SendData(SPI1, 0); //SEND PROXY DATA
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_RXNE) == RESET);
-	y = SPI_ReceiveData(SPI1); //getcSPI1();
+        while (SPI_GetFlagStatus(SPI_FLAG_TXE)== RESET);
+	SPI_SendData(0); //SEND PROXY DATA
+        while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET);
+	y = SPI_ReceiveData(); //getcSPI1();
 
 	ss_high;	// hi
 	return y;
@@ -38,15 +39,15 @@ void WriteReg(char add, char data)
 	unsigned char x, y;
 	ss_low;    //lo
 
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_TXE)== RESET);
-	SPI_SendData(SPI1, add); // putcSPI1(add);         			//SEND ADR BYTE
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_RXNE) == RESET);
-	y = SPI_ReceiveData(SPI1);
+        while (SPI_GetFlagStatus(SPI_FLAG_TXE)== RESET);
+	SPI_SendData(add); // putcSPI1(add);         			//SEND ADR BYTE
+        while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET);
+	y = SPI_ReceiveData();
 
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_TXE)== RESET);
-	SPI_SendData(SPI1, data); //SEND PROXY DATA
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_RXNE) == RESET);
-	y = SPI_ReceiveData(SPI1); //getcSPI1();
+        while (SPI_GetFlagStatus(SPI_FLAG_TXE)== RESET);
+	SPI_SendData(data); //SEND PROXY DATA
+        while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET);
+	y = SPI_ReceiveData(); //getcSPI1();
 
 	ss_high;	// hi
 }
@@ -56,10 +57,10 @@ char SendStrobe(char strobe)
 	unsigned char out;
 	ss_low;    //lo
 
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_TXE)== RESET);
-	SPI_SendData(SPI1, strobe); //SEND STROBE BYTE
-        while (SPI_GetFlagStatus(SPI1,SPI_FLAG_RXNE) == RESET);
-	out = SPI_ReceiveData(SPI1); 
+        while (SPI_GetFlagStatus(SPI_FLAG_TXE)== RESET);
+	SPI_SendData(strobe); //SEND STROBE BYTE
+        while (SPI_GetFlagStatus(SPI_FLAG_RXNE) == RESET);
+	out = SPI_ReceiveData(); 
 
 	ss_high;	// hi
 	return out;
@@ -101,10 +102,10 @@ void send_data_rf(unsigned char *data)
 		WriteReg(CC2500_TXFIFO, data2[i]);
 	}
 	SendStrobe(CC2500_TX);          // STX: enable TX
-	while(!(GPIOA->IDR & GPIO_Pin_3));      // Wait for GDO0 to be set -> sync transmitted	
+	while(!(GPIOC->IDR & GPIO_PIN_3));      // Wait for GDO0 to be set -> sync transmitted	
 //      while (!GDO);
 
-	while(GPIOA->IDR & GPIO_Pin_3);         // Wait for GDO0 to be cleared -> end of packet	
+	while(GPIOC->IDR & GPIO_PIN_3);         // Wait for GDO0 to be cleared -> end of packet	
 //       while (GDO);
         
 //         RxData();              // commented by ronak 22/10/14 (no ack required)
@@ -251,5 +252,5 @@ void setup(void)
 	init_CC2500();
 //        Read_Config_Regs();
 	delay_ms(1000);
-        plan to set in rx mode here.   cc2500_mode(1);  //configure device in rx/tx mode (1 - rx ,0 - tx) 
+        /*plan to set in rx mode here.*/   cc2500_mode(1);  //configure device in rx/tx mode (1 - rx ,0 - tx) 
 }
