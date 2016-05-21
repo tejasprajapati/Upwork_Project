@@ -239,7 +239,7 @@ void Read_Config_Regs(void)
 	unsigned int addr = 0,inc=0;
 	for(inc=0;inc<99;inc++)
 	{
-		response_aray[inc]=Read(addr++);
+            response_aray[inc]=Read(addr++);
 	}
 }
 void setup(void) 
@@ -251,5 +251,5 @@ void setup(void)
 	init_CC2500();
 //        Read_Config_Regs();
 	delay_ms(1000);
-        plan to set in rx mode here. //20-5-16 
+        plan to set in rx mode here.   cc2500_mode(1);  //configure device in rx/tx mode (1 - rx ,0 - tx) 
 }
