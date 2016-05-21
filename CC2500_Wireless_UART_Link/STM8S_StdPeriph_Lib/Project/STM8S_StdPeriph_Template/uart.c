@@ -1,8 +1,9 @@
 #include "stm8s.h"
+#include "uart.h"
 
 unsigned char index = 0;
 
-void uart_init(baudrate)
+void uart_init(int baudrate)
 {
   UART1_Cmd(DISABLE);
   UART1_DeInit();

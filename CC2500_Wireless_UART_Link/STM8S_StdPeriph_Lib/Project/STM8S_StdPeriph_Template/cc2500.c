@@ -2,8 +2,8 @@
 #include "stm8s_spi.h"
 #include "string.h"
 
-extern unsigned char *tx_id;
-extern unsigned char *rx_id;
+extern char *tx_id;
+extern char *rx_id;
 unsigned char response_aray[65];
 
 void delay_ms(__IO uint32_t nTime) 

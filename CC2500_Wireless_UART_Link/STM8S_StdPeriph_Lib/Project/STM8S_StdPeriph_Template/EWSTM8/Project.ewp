@@ -2407,7 +2407,7 @@
         <debug>1</debug>
         <option>
           <name>GenDeviceSelectMenu</name>
-          <state>UnspecifiedSTM8	STM8 - Unspecified</state>
+          <state>STM8S103F3P	STM8S103F3P</state>
         </option>
         <option>
           <name>GenCodeModel</name>
@@ -2460,7 +2460,7 @@
         </option>
         <option>
           <name>GenLibInFormatterDescription</name>
-          <state>No specifier n, no float, no scan set, no assignment suppressing.</state>
+          <state>Full formatting, without multibytes.</state>
         </option>
         <option>
           <name>GenLibOutFormatter</name>
@@ -2469,7 +2469,7 @@
         </option>
         <option>
           <name>GenLibOutFormatterDescription</name>
-          <state>No specifier a or A, no specifier n, no float.</state>
+          <state>Full formatting, without multibytes.</state>
         </option>
         <option>
           <name>GenStackSize</name>
@@ -2508,7 +2508,7 @@
         </option>
         <option>
           <name>GenMathFunctionDescription</name>
-          <state></state>
+          <state>Default variants of cos, sin, tan, log, log10, pow, and exp.</state>
         </option>
       </data>
     </settings>
@@ -2998,7 +2998,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$TOOLKIT_DIR$\config\lnkstm8.icf</state>
+          <state>$TOOLKIT_DIR$\config\lnkstm8s103f3.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -7342,39 +7342,39 @@
   <group>
     <name>User</name>
     <file>
-      <name>$PROJ_DIR$\..\main.c</name>
+      <name>$PROJ_DIR$\..\at_command.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\at_command.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\cc2500.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\eeprom.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\eeprom.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\global.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\main_upwork_rb.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\rad.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\stm8s_it.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\..\uart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\uart.h</name>
+    </file>
   </group>
-  <file>
-    <name>$PROJ_DIR$\..\cc2500.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\..\global.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\..\main_smrt_hm.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\..\main_upwork_rb.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\..\rad.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\..\stm8l15x_it.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\..\stm8l15x_it.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\..\uart.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\..\uart.h</name>
-  </file>
 </project>
 
 

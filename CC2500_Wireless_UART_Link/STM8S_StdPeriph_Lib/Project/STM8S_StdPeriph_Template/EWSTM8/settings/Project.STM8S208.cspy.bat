@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "F:\projects_ronak\upwork_project\Git_checkout\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\settings\Project.STM8S208.general.xcl" --backend -f "F:\projects_ronak\upwork_project\Git_checkout\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\settings\Project.STM8S208.driver.xcl" 
+"C:\Program Files\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\settings\Project.STM8S208.general.xcl" --backend -f "D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\settings\Project.STM8S208.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "F:\projects_ronak\upwork_project\Git_checkout\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\settings\Project.STM8S208.general.xcl" "--debug_file=%~1" --backend -f "F:\projects_ronak\upwork_project\Git_checkout\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\settings\Project.STM8S208.driver.xcl" 
+"C:\Program Files\IAR Systems\Embedded Workbench 7.3\common\bin\cspybat" -f "D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\settings\Project.STM8S208.general.xcl" "--debug_file=%~1" --backend -f "D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\settings\Project.STM8S208.driver.xcl" 
 
 @echo off 
 :end

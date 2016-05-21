@@ -1,22 +1,26 @@
-char *Buadrates[6] =                                                            /*Return message which can be printed on console easily*/
-{
-  "4800",
-  "9600",
-  "19200",
-  "38400",
-  "57600",
-  "115200",
-};
+#ifndef AT_COMMAND_H
 
-char *Trans_mode[2] = 
-{
-  "Addressing mode",
-  "Broadcasting mode"
-};
+#define AT_COMMAND_H
 
-char *Freq[]                                                                    /*Number of frequencies currently unknown*/
-{
-};
+//char *Buadrates[6] =                                                            /*Return message which can be printed on console easily*/
+//{
+//  "4800",
+//  "9600",
+//  "19200",
+//  "38400",
+//  "57600",
+//  "115200",
+//};
+
+//char *Trans_mode[2] = 
+//{
+//  "Addressing mode",
+//  "Broadcasting mode"
+//};
+
+/*char *Freq[] */                                                                   /*Number of frequencies currently unknown*/
+/*{
+};*/
 
 enum Transmission_Mode                                                          /*Enum for transmission mode to be selected*/
 {
@@ -26,8 +30,8 @@ enum Transmission_Mode                                                          
 
 enum Frequency                                                                  /*Enum for transmission frequency to be set*/
 {
-  ADDRESS_MODE,
-  BROADCAST_MODE,
+  FREQ1,
+  FREQ2,
 };
 
 enum Bauds
@@ -49,9 +53,13 @@ enum Operation_Mode
 struct Comm_Parameters                                                          /*Structure for CC2500 and UART parameters*/
 {
   enum Transmission_Mode CC2500_Mode;
-  enum Frequency CC2500_Frequency;
+  //enum Frequency CC2500_Frequency;
   enum Bauds UART_Baudrates;
-}
+  unsigned data_complete : 1;
+  unsigned exit_command_mode : 1;
+  unsigned data_received_from_RF : 1;
+  unsigned data_received_from_UART : 1;
+};
 
 
 char * set_addressing_mode(enum Transmission_Mode);                             /*Set addressing mode in CC2500*/
@@ -63,3 +71,6 @@ char * get_remote_id(void);                                             /*Get Re
 char * set_baudrate(enum Bauds);                                                /*Set Buadrate for UART communication*/
 char * get_baudrate(void);                                                      /*Get Buadrate for UART communication*/
 char * reset_parameters(void);                                                  /*Reset the parameters to defualt*/
+
+
+#endif

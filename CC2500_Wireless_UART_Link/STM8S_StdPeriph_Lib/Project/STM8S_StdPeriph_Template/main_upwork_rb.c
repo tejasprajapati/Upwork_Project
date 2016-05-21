@@ -2,10 +2,14 @@
 #include "rad.h"
 #include "global.h"
 #include "stm8s_it.h"
+#include "at_command.h"
 
 int baudrate;
-enum Opeartion_Mode Op_mode;
+//enum Opeartion_Mode Op_mode;
 bool data_complete,exit_command_mode;
+char *RF_send_buff;
+char *uart_send_buff;
+struct Comm_Parameters a;
 
 void clk_init(void);
 void Delay (uint16_t nCount);
@@ -16,7 +20,8 @@ void spi_init(void);
 
 #define default 0
 #define change  1
-#define command_mode switch_position
+//#define command_mode switch_position
+int command_mode;
 
 int main (void)
 {
@@ -32,27 +37,27 @@ int main (void)
   
   while (1)
   {
-    while(Op_mode.NORMAL_OPERATION_MODE)
+    while(command_mode)
     {
-        if(data_complete)
+        if(a.data_complete)
         {
             write_data_to_eeprom(change);
             read_data_from_eeprom();
             data_complete = 0;
         }
-        else if(exit_command_mode)
+        else if(a.exit_command_mode)
         {
             break;
         }
     }
-    if(data_received_RF)
+    if(a.data_received_from_RF)
     {
-        data_received_RF = 0;
+        a.data_received_from_RF = 0;
         send_data_uart(uart_send_buff);      
     }
-    else if(data_received_UART)
+    else if(a.data_received_from_UART)
     {
-        data_received_UART = 0;
+        a.data_received_from_UART = 0;
         send_data_rf(RF_send_buff);
     }
   }
@@ -110,3 +115,25 @@ void spi_init(void)
 //  /* Set MSD ChipSelect pin in Output push-pull high level */                                         // not required.
 //  GPIO_Init(GPIOC, GPIO_PIN_4 , GPIO_MODE_OUT_PP_HIGH_SLOW);
 }
+
+
+#ifdef USE_FULL_ASSERT
+
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *   where the assert_param error has occurred.
+  * @param file: pointer to the source file name
+  * @param line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t* file, uint32_t line)
+{ 
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+
+  /* Infinite loop */
+  while (1)
+  {
+  }
+}
+#endif
