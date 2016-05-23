@@ -250,7 +250,7 @@ void setup(void)
 
 	delay_ms(1000);
 	init_CC2500();
-//        Read_Config_Regs();
+        Read_Config_Regs();
 	delay_ms(1000);
         /*plan to set in rx mode here.*/   cc2500_mode(1);  //configure device in rx/tx mode (1 - rx ,0 - tx) 
 }

@@ -85,16 +85,11 @@ void clk_init(void)
 
 void gpio_init(void)
 {
-  /*GPIO_Init(GPIOD,GPIO_PIN_3, GPIO_MODE_OUT_PP_HIGH_FAST);
-  GPIO_Init(GPIOC,GPIO_PIN_7, GPIO_MODE_OUT_PP_LOW_SLOW);
-  GPIO_Init(GPIOA,GPIO_PIN_3, GPIO_MODE_IN_PU_NO_IT);
-  GPIO_Init(GPIOF,GPIO_PIN_0, GPIO_MODE_IN_PU_IT);*/
-  GPIO_Init(GPIOC,GPIO_PIN_1, GPIO_MODE_IN_PU_IT);//  GPIO_Init(GPIOB,GPIO_Pin_1, GPIO_Mode_In_PU_IT);
-  GPIO_Init(GPIOB,GPIO_PIN_2, GPIO_MODE_IN_PU_IT);
-  GPIO_Init(GPIOB,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);
-  GPIO_Init(GPIOB,GPIO_PIN_4, GPIO_MODE_IN_PU_IT);
+  GPIO_Init(GPIOC,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);                              /*GDO0*/
+  GPIO_Init(GPIOD,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);                              /*Mode_switch*/
   
-  EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOC, EXTI_SENSITIVITY_FALL_ONLY); //gdo0
+  EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOC, EXTI_SENSITIVITY_FALL_ONLY);       /*GDO0 Interrupt*/
+  EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOD, EXTI_SENSITIVITY_FALL_ONLY);       /*Mode_switch Interrupt*/
   EXTI_SetTLISensitivity(EXTI_TLISENSITIVITY_FALL_ONLY);
 }
 
@@ -111,9 +106,8 @@ void spi_init(void)
   Delay(0xFFF);
                                                                                                         /* SD_SPI enable */
   SPI_Cmd( ENABLE);
-
-//  /* Set MSD ChipSelect pin in Output push-pull high level */                                         // not required.
-//  GPIO_Init(GPIOC, GPIO_PIN_4 , GPIO_MODE_OUT_PP_HIGH_SLOW);
+  
+  GPIO_Init(GPIOC,GPIO_PIN_4, GPIO_MODE_OUT_PP_HIGH_FAST);                      /*CS*/
 }
 
 

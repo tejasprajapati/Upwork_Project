@@ -28,7 +28,7 @@
 #define MISO GPIO_Pin_6;
 #define MOSI GPIO_Pin_7;
 #define ss_low  GPIO_WriteLow(GPIOC, GPIO_PIN_4);                               /*GPIO_WriteBit(GPIOD,GPIO_Pin_3,RESET)*/
-#define ss_high GPIO_WriteHigh(GPIOC, GPIO_PIN_4);                               /*GPIO_WriteBit(GPIOD,GPIO_Pin_3,SET)*/
+#define ss_high GPIO_WriteHigh(GPIOC, GPIO_PIN_4);                              /*GPIO_WriteBit(GPIOD,GPIO_Pin_3,SET)*/
 //#define led(a) GPIOC->ODR = (a<<7);
 
 
