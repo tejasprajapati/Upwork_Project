@@ -3,8 +3,24 @@
 
 char *set_addressing_mode(enum Transmission_Mode mode)
 {
-  WriteReg(REG_IOCFG2, VAL_IOCFG2);
-  return "Done";
+  WriteReg(REG_ADDR, mode);
+  return "Register written with the setting.";
+}
+
+char get_addressing_mode(void)
+{
+  return ReadReg(REG_ADDR);
+}
+
+char * set_channel_frequency(enum Frequency freq)
+{
+  WriteReg(REG_CHANNR, freq);
+  return "Selected frequency written.";
+}
+
+char get_channel_frequency(void)
+{
+  return ReadReg(REG_CHANNR);
 }
 //char * get_addressing_mode(void);                                               /*Get current addressing mode in CC2500*/
 //char * set_channel_frequency(enum Frequency);                                   /*Set channel frequency in CC2500*/
