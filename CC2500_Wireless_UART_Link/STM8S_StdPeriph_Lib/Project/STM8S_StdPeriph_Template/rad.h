@@ -46,6 +46,7 @@ void TxData(unsigned char*);
 char RxData(void);
 void cc2500_mode(char);
 void generate_id(int);
+void send_data_rf(char *);
 
 /*****************************************************************/
 
@@ -66,7 +67,7 @@ void generate_id(int);
 #define REG_FIFOTHR          0x0003
 #define REG_SYNC1            0x0004
 #define REG_SYNC0            0x0005
-#define REG_PKTLEN           0x0006
+#define REG_PKTLEN           0x0032
 #define REG_PKTCTRL1         0x0007
 #define REG_PKTCTRL0         0x0008
 #define REG_ADDR             0x0009

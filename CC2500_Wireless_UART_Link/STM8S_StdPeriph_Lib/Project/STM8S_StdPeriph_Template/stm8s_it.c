@@ -27,6 +27,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s_it.h"
+#include "at_command.h"
+#include "rad.h"
+    
+extern struct Comm_Parameters a;
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -153,17 +157,13 @@ INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
   if(GPIO_ReadInputData(GPIOC) & GPIO_PIN_3 == 0x00)                            /*GDO0 interrupt pin*/
   {
     char i;
-    memset(rf_data,0,sizeof(rf_data));						/* clearing the array.*/
+    memset(Uart_send_buff, 0, MAX_BUF_SIZE);						/* clearing the array.*/
 
-    for (i = 0; i < 12; i++) 							/* Reading the data from the fifo*/
+    for (i = 0; i < MAX_BUF_SIZE; i++) 							/* Reading the data from the fifo*/
     {
-      rf_data[i] = Read(CC2500_RXFIFO);
+      Uart_send_buff[i] = Read(CC2500_RXFIFO);
     }
-    if (strncmp(rf_data, tx_id, 9) == 0)        				/* logic to decode the switch no which is pressed must be here.*/
-    {
-      take_action = (((rf_data[9] - 0x30) * 10) + (rf_data[10] - 0x30));
-      request_received = 1;
-    }
+    a.data_received_from_RF = 1;
     SendStrobe(CC2500_IDLE);
     SendStrobe(CC2500_FRX);
     SendStrobe(CC2500_RX);

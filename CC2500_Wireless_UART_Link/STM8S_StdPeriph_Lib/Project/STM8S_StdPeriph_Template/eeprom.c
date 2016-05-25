@@ -1,5 +1,6 @@
 #include "eeprom.h"
-#include "stm8s.h"
+
+extern uint8_t baud_rate_array[8],did_array[5],ch_no_array[4];
 
 void write_data_to_eeprom(char change_data)
 {

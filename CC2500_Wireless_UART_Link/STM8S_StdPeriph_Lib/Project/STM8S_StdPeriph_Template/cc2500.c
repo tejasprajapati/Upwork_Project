@@ -89,27 +89,24 @@ void cc2500_mode(char mode)
 //	RxData();
 //}
 
-void send_data_rf(unsigned char *data) 
+void send_data_rf(char *data) 
 {
-    unsigned char data2[12], i,length =12;//="temp must be changed"
-	strcpy(data2,data);
-//	unsigned char data2[6] = "techno", i;
+    unsigned char data_to_send[50], i,length = sizeof(data_to_send);
+    strcpy(data_to_send,data);
+    SendStrobe(CC2500_IDLE);                                                    /*Make sure that the radio is in IDLE state before flushing the FIFO*/
+    SendStrobe(CC2500_FTX);                                                     /*Flush TX FIFO*/
+    SendStrobe(CC2500_IDLE);	                                                /*SIDLE: exit RX/TX*/
 
-	SendStrobe(CC2500_IDLE);        // Make sure that the radio is in IDLE state before flushing the FIFO
-	SendStrobe(CC2500_FTX);         // Flush TX FIFO
-	SendStrobe(CC2500_IDLE);	// SIDLE: exit RX/TX
-	for (i = 0; i < length; i++) {
-		WriteReg(CC2500_TXFIFO, data2[i]);
-	}
-	SendStrobe(CC2500_TX);          // STX: enable TX
-	while(!(GPIOC->IDR & GPIO_PIN_3));      // Wait for GDO0 to be set -> sync transmitted	
-//      while (!GDO);
+    for (i = 0; i < length; i++) 
+    {
+      WriteReg(CC2500_TXFIFO, data_to_send[i]);
+    }
+    SendStrobe(CC2500_TX);                                                      /*STX: enable TX*/
+    while(!(GPIOC->IDR & GPIO_PIN_3));                                          /*Wait for GDO0 to be set -> sync transmitted*/
 
-	while(GPIOC->IDR & GPIO_PIN_3);         // Wait for GDO0 to be cleared -> end of packet	
-//       while (GDO);
-        
-//         RxData();              // commented by ronak 22/10/14 (no ack required)
-} // Rf TX Packet
+    while(GPIOC->IDR & GPIO_PIN_3);                                             /*Wait for GDO0 to be cleared -> end of packet*/	
+    
+}
 
 char rcv_data_rf(void) 
 {

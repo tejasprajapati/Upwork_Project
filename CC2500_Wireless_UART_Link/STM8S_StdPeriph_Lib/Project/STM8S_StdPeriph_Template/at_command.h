@@ -2,6 +2,13 @@
 
 #define AT_COMMAND_H
 
+#include <string.h>
+
+#define MAX_BUF_SIZE    50
+
+extern char RF_send_buff[MAX_BUF_SIZE], Uart_send_buff[MAX_BUF_SIZE];
+extern int command_mode;
+
 //char *Buadrates[6] =                                                            /*Return message which can be printed on console easily*/
 //{
 //  "4800",

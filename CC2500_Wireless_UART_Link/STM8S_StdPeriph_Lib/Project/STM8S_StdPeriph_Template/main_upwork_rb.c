@@ -3,13 +3,16 @@
 #include "global.h"
 #include "stm8s_it.h"
 #include "at_command.h"
+#include "uart.h"
+#include "eeprom.h"
 
-int baudrate;
-//enum Opeartion_Mode Op_mode;
+int baudrate, command_mode;
+uint8_t baud_rate_array[8],did_array[5],ch_no_array[4];
 bool data_complete,exit_command_mode;
-char *RF_send_buff;
-char *uart_send_buff;
+char RF_send_buff[MAX_BUF_SIZE];
+char Uart_send_buff[MAX_BUF_SIZE];
 struct Comm_Parameters a;
+//enum Opeartion_Mode Op_mode;
 
 void clk_init(void);
 void Delay (uint16_t nCount);
@@ -21,7 +24,7 @@ void spi_init(void);
 #define default 0
 #define change  1
 //#define command_mode switch_position
-int command_mode;
+
 
 int main (void)
 {
@@ -39,21 +42,21 @@ int main (void)
   {
     while(command_mode)
     {
-        if(a.data_complete)
-        {
-            write_data_to_eeprom(change);
-            read_data_from_eeprom();
-            data_complete = 0;
-        }
-        else if(a.exit_command_mode)
-        {
-            break;
-        }
+      if(a.data_complete)
+      {
+        write_data_to_eeprom(change);
+        read_data_from_eeprom();
+        a.data_complete = 0;
+      }
+      else if(a.exit_command_mode)
+      {
+        break;
+      }
     }
     if(a.data_received_from_RF)
     {
         a.data_received_from_RF = 0;
-        send_data_uart(uart_send_buff);      
+        send_data_uart(Uart_send_buff);      
     }
     else if(a.data_received_from_UART)
     {

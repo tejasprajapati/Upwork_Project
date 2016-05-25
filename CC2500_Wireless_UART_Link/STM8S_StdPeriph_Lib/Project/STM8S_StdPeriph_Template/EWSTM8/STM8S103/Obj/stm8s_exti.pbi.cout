@@ -1,18 +1,18 @@
-"D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Libraries\STM8S_StdPeriph_Driver\src\stm8s_exti.c"
+"D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Libraries\STM8S_StdPeriph_Driver\src\stm8s_exti.c"
 -std=c99
 -ferror-limit=100
 -I
-D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\..
+D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\..
 -I
-D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\..\..\..\Libraries\STM8S_StdPeriph_Driver\inc
+D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template\EWSTM8\..\..\..\Libraries\STM8S_StdPeriph_Driver\inc
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 7.3\stm8\inc
 -I
 C:\Program Files\IAR Systems\Embedded Workbench 7.3\stm8\inc\c
 -I
-D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template
+D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Project\STM8S_StdPeriph_Template
 -I
-D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Libraries\STM8S_StdPeriph_Driver\inc
+D:\Desktop Backup\All Programs\Ongoing Projects\Upwork_Project\CC2500_Wireless_UART_Link\STM8S_StdPeriph_Lib\Libraries\STM8S_StdPeriph_Driver\inc
 -DSTM8S103=1
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
