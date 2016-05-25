@@ -150,6 +150,25 @@ INTERRUPT_HANDLER(EXTI_PORTB_IRQHandler, 4)
   */
 INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
 {
+  if(GPIO_ReadInputData(GPIOC) & GPIO_PIN_3 == 0x00)                            /*GDO0 interrupt pin*/
+  {
+    char i;
+    memset(rf_data,0,sizeof(rf_data));						/* clearing the array.*/
+
+    for (i = 0; i < 12; i++) 							/* Reading the data from the fifo*/
+    {
+      rf_data[i] = Read(CC2500_RXFIFO);
+    }
+    if (strncmp(rf_data, tx_id, 9) == 0)        				/* logic to decode the switch no which is pressed must be here.*/
+    {
+      take_action = (((rf_data[9] - 0x30) * 10) + (rf_data[10] - 0x30));
+      request_received = 1;
+    }
+    SendStrobe(CC2500_IDLE);
+    SendStrobe(CC2500_FRX);
+    SendStrobe(CC2500_RX);
+  }
+  
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
@@ -163,6 +182,10 @@ INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
   */
 INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 {
+  if(GPIO_ReadInputData(GPIOC) & GPIO_PIN_3 == 0x00)                            /*Switch interrupt pin*/
+  {
+    command_mode ^= 1;                                                          /*Toggle the command mode*/
+  }
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
