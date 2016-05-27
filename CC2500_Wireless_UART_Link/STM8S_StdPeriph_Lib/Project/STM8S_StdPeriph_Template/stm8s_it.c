@@ -31,6 +31,8 @@
 #include "rad.h"
     
 extern struct Comm_Parameters a;
+extern int command_mode;
+extern char uart_rcv_buff[50];
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -394,6 +396,38 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
     /* In order to detect unexpected events during development,
        it is recommended to set a breakpoint on the following instruction.
     */
+  static char index = 0;
+  uint8_t temp;
+  
+  /* Read one byte from the receive data register and send it back */
+  temp = (UART1_ReceiveData8() & 0x7F);
+  if(temp == '\n')
+  {
+    uart_rcv_buff[index] = 0x00;
+    index = 0;
+    if(command_mode)
+    {
+//      if(strncmp(uart_rcv_buff,"EXIT",4)==0)
+//      {
+//        a.exit_command_mode = 1;
+//      }
+      if(strncmp(uart_rcv_buff,"AT",2)==0)
+      {
+        a.data_complete = 1;
+      }
+    }
+    else
+    {
+      a.data_received_from_UART = 1;
+    }
+  }
+  else
+  {
+    if(index<=255)
+    {
+      uart_rcv_buff[index++] = temp;
+    }
+  }
 }
 #endif /*STM8S105*/
 

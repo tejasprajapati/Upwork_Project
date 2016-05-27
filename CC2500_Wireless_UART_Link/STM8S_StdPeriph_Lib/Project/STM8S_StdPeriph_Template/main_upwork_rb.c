@@ -6,25 +6,28 @@
 #include "uart.h"
 #include "eeprom.h"
 
+#define default 0
+//#define command_mode switch_position
+
 int baudrate, command_mode;
-uint8_t baud_rate_array[8],did_array[5],ch_no_array[4];
+char baud_rate_array[8],did_array[5],ch_no_array[4],cid_array[4],rid_array[4],mode_array[2];
 bool data_complete,exit_command_mode;
 char RF_send_buff[MAX_BUF_SIZE];
 char Uart_send_buff[MAX_BUF_SIZE];
+char uart_rcv_buff[MAX_BUF_SIZE];
 struct Comm_Parameters a;
-//enum Opeartion_Mode Op_mode;
 
 void clk_init(void);
 void Delay (uint16_t nCount);
+void handle_uart_request(char *);
+void check_for_parameter(char *, char); 
 void write_data_to_eeprom(bool);
 void Read_data_from_eeprom (void);
 void gpio_init(void);
 void spi_init(void);
 
-#define default 0
-#define change  1
-//#define command_mode switch_position
 
+int command_mode,change;
 
 int main (void)
 {
@@ -44,14 +47,15 @@ int main (void)
     {
       if(a.data_complete)
       {
+        handle_uart_request(uart_rcv_buff);
         write_data_to_eeprom(change);
         read_data_from_eeprom();
-        a.data_complete = 0;
+        data_complete = 0;
       }
-      else if(a.exit_command_mode)
-      {
-        break;
-      }
+//      else if(a.exit_command_mode)
+//      {
+//        break;
+//      }
     }
     if(a.data_received_from_RF)
     {
@@ -113,6 +117,100 @@ void spi_init(void)
   GPIO_Init(GPIOC,GPIO_PIN_4, GPIO_MODE_OUT_PP_HIGH_FAST);                      /*CS*/
 }
 
+void handle_uart_request(char * uart_req)
+{
+  char *ptr = NULL, edit = 0;
+  
+//  check_for_parameter(uart_req);
+  
+  ptr = strstr(uart_req,"=");
+  if(ptr != NULL)
+  {
+    edit = 1;
+    check_for_parameter(uart_req , edit);
+  }
+  else
+  {
+     ptr = strstr(uart_req,"?");
+     if(ptr != NULL)
+     {
+        check_for_parameter(uart_req , edit);
+     }
+       else
+        {
+          ptr = strstr(uart_req,"RST");
+          if(ptr != NULL)
+          {
+            change = default;
+          }
+        }
+  }
+              
+}
+
+void check_for_parameter(char * parameter , char edit)                          //BR,CID,DID,RID,MODE,RST
+{
+    if(strncmp(parameter,"AT+BR",5) == 0)                                       /*Baudrate*/
+    { 
+      if(edit)
+      {
+        strcpy(baud_rate_array,parameter + 6);
+        change = 1;
+      }
+      else
+      {
+        send_data_uart(baud_rate_array);
+      }
+    }
+    else if(strncmp(parameter,"AT+CID",6)==0)                                   /*Channel ID*/
+    {
+      if(edit)
+      {
+        strcpy(cid_array,parameter + 7);
+        change = 1;
+      }
+      else
+      {
+        send_data_uart(cid_array);
+      }
+    }
+    else if(strncmp(parameter,"AT+DID",6)==0)                                   /*Device ID*/
+    {
+      if(edit)
+      {
+        strcpy(did_array,parameter + 7);
+        change = 1;
+      }
+      else
+      {
+        send_data_uart(did_array);
+      }
+    }
+    else if(strncmp(parameter,"AT+RID",6)==0)                                   /*Remote ID*/
+    {
+      if(edit)
+      {
+        strcpy(rid_array,parameter + 7);
+        change = 1;
+      }
+      else
+      {
+        send_data_uart(rid_array);
+      }
+    } 
+    else if(strncmp(parameter,"AT+MODE",7)==0)
+    {
+      if(edit)
+      {
+        strcpy(mode_array,parameter + 8);
+        change = 1;
+      }
+      else
+      {
+        send_data_uart(mode_array);
+      }
+    } 
+}
 
 #ifdef USE_FULL_ASSERT
 

@@ -1,6 +1,6 @@
 #include "eeprom.h"
 
-extern uint8_t baud_rate_array[8],did_array[5],ch_no_array[4];
+extern char baud_rate_array[8],did_array[5],ch_no_array[4];
 
 void write_data_to_eeprom(char change_data)
 {
@@ -14,7 +14,7 @@ void write_data_to_eeprom(char change_data)
     {
       write_array_to_eeprom(baud_rate_addr,baud_rate_array);
       write_array_to_eeprom(did_addr,did_array);
-      write_array_to_eeprom(ch_no_addr,ch_no_array);
+      write_array_to_eeprom(ch_no_addr,cid_array);
     } 
     else if(change_data == 0)
     {
