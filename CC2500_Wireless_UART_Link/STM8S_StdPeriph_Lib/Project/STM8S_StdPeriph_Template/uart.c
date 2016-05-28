@@ -3,7 +3,7 @@
 
 unsigned char index = 0;
 
-void uart_init(int baudrate)
+void uart_init(long baudrate)
 {
   UART1_Cmd(DISABLE);
   UART1_DeInit();

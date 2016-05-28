@@ -9,7 +9,8 @@
 #define default 0
 //#define command_mode switch_position
 
-int baudrate, command_mode;
+int command_mode;
+long baudrate;
 char baud_rate_array[8],did_array[5],ch_no_array[4],cid_array[4],rid_array[4],mode_array[2];
 bool data_complete,exit_command_mode;
 char RF_send_buff[MAX_BUF_SIZE];
@@ -50,7 +51,7 @@ int main (void)
         handle_uart_request(uart_rcv_buff);
         write_data_to_eeprom(change);
         read_data_from_eeprom();
-        data_complete = 0;
+        a.data_complete = 0;
       }
 //      else if(a.exit_command_mode)
 //      {

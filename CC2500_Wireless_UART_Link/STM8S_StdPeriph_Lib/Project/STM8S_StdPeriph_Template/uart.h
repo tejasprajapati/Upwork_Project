@@ -2,7 +2,7 @@
 
 #define UART_H
 
-void uart_init(int);
+void uart_init(long);
 void send_data_uart(char *);
 
 #endif
