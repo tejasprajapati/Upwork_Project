@@ -125,7 +125,7 @@ char rcv_data_rf(void)
 	// Wait for GDO0 to be set -> sync received
 	//    while (!GDO)
 	//while (!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_3))
-	while(GPIOA->IDR &=(1<<3))
+	while(GPIOC->IDR &=(1<<3))
 //	while(!(GPIOA->IDR & GPIO_Pin_3))
 	{
 		tag++;
@@ -141,7 +141,7 @@ char rcv_data_rf(void)
 //    while (GDO)
 //	while (GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_3))
 //	while((GPIOA->IDR & GPIO_Pin_3))
-	while(GPIOA->IDR &=(1<<3))
+	while(GPIOC->IDR &=(1<<3))
 	{
 		tag++;
 		if (tag > 6500000)
