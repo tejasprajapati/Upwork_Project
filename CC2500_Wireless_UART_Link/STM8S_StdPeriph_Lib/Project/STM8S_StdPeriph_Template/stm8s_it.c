@@ -401,7 +401,7 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
   
   /* Read one byte from the receive data register and send it back */
   temp = (UART1_ReceiveData8() & 0x7F);
-  if(temp == '\n')
+  if(temp == '\r')
   {
     uart_rcv_buff[index] = 0x00;
     index = 0;
@@ -428,6 +428,8 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
       uart_rcv_buff[index++] = temp;
     }
   }
+  
+  UART1_ClearITPendingBit(UART1_IT_RXNE);   // added by rb for clearing the pending it.
 }
 #endif /*STM8S105*/
 

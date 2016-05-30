@@ -5,13 +5,14 @@
 #include "at_command.h"
 #include "uart.h"
 #include "eeprom.h"
+#include "stdlib.h"
 
 #define default 0
 //#define command_mode switch_position
 
 int command_mode;
-long baudrate;
-char baud_rate_array[8],did_array[5],ch_no_array[4],cid_array[4],rid_array[4],mode_array[2];
+unsigned long baudrate;
+char baud_rate_array[8],did_array[5],cid_array[4],rid_array[4],mode_array[2];
 bool data_complete,exit_command_mode;
 char RF_send_buff[MAX_BUF_SIZE];
 char Uart_send_buff[MAX_BUF_SIZE];
@@ -41,7 +42,8 @@ int main (void)
   setup();              // configure the cc2500 in required format.
                         /* Enable general interrupts */
   enableInterrupts();
-  
+  UART1_SendData8('R');
+  UART1_SendData8('B');
   while (1)
   {
     while(command_mode)

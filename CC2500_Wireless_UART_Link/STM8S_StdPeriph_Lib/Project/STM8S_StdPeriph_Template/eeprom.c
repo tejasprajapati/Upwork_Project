@@ -1,7 +1,7 @@
 #include "eeprom.h"
-
-extern char baud_rate_array[8],did_array[5],ch_no_array[4];
-
+#include "stdlib.h"
+extern char baud_rate_array[8],did_array[5],cid_array[4],rid_array[4],mode_array[2];
+extern unsigned long baudrate;
 void write_data_to_eeprom(char change_data)
 {
   /* Define FLASH programming time */
@@ -15,20 +15,27 @@ void write_data_to_eeprom(char change_data)
       write_array_to_eeprom(baud_rate_addr,baud_rate_array);
       write_array_to_eeprom(did_addr,did_array);
       write_array_to_eeprom(ch_no_addr,cid_array);
+      write_array_to_eeprom(mode_addr,mode_array);
+//      write_array_to_eeprom(rid_addr,rid_array);  need to discuss.
     } 
     else if(change_data == 0)
     {
       write_array_to_eeprom(baud_rate_addr,"115200");
       write_array_to_eeprom(did_addr,"255");
       write_array_to_eeprom(ch_no_addr,"11");
+      write_array_to_eeprom(mode_addr,"B");
+//      write_array_to_eeprom(rid_addr,rid_array); need to discuss.
     }
 }
 
 void read_data_from_eeprom()
 {
   read_array_from_eeprom(baud_rate_addr,baud_rate_array);
+  baudrate = atol(baud_rate_array);
   read_array_from_eeprom(did_addr,did_array);
-  read_array_from_eeprom(ch_no_addr,ch_no_array);
+  read_array_from_eeprom(ch_no_addr,cid_array);
+  read_array_from_eeprom(mode_addr,mode_array);
+ // read_array_from_eeprom(rid_addr,rid_array);   need to discuss.
 }
 
 void write_array_to_eeprom(uint32_t addr,uint8_t* array)
