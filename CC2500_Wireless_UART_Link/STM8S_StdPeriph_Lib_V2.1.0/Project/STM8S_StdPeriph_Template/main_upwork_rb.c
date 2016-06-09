@@ -36,7 +36,7 @@ int main (void)
 {
   clk_init();
   gpio_init();
-  write_data_to_eeprom(default);
+//  write_data_to_eeprom(default);
   read_data_from_eeprom();
   uart_init(baudrate);
   spi_init();
@@ -65,7 +65,12 @@ int main (void)
     }
     else if(a.data_received_from_UART)
     {
+        int crc_got = 0;
+        char length = strlen(RF_send_buff);
         ack_received = 0;
+        crc_got = check_crc(RF_send_buff, length);
+        RF_send_buff[length] = ((crc_got & 0xFF00) >> 8);
+        RF_send_buff[length + 1] = (crc_got & 0x00FF);
         send_data_rf(RF_send_buff);
         cc2500_mode(1);
         
@@ -78,20 +83,6 @@ int main (void)
         a.data_received_from_UART = 0;
     }
   }
-}
-
-/**
-  * @brief  Delay.
-  * @param  nCount
-  * @retval None
-  */
-void Delay(uint16_t nCount)
-{
-    /* Decrement nCount value */
-    while (nCount != 0)
-    {
-        nCount--;
-    }
 }
 
 void clk_init(void)
@@ -120,16 +111,24 @@ void spi_init(void)
            SPI_CLOCKPOLARITY_LOW, SPI_CLOCKPHASE_1EDGE, SPI_DATADIRECTION_2LINES_FULLDUPLEX,
            SPI_NSS_SOFT, 0x07);
   
-  Delay(0xFFF);
+  delay_ms(4095);
                                                                                                         /* SD_SPI enable */
   SPI_Cmd( ENABLE);
   
   GPIO_Init(GPIOC,GPIO_PIN_4, GPIO_MODE_OUT_PP_HIGH_FAST);                      /*CS*/
 }
 
-inline char crc_ok(char * packet)
+inline char crc_ok(char * packet, int length)
 {
-  return true;
+  int rcvd_crc = packet[length - 2 ];
+  rcvd_crc = rcvd_crc << 8;
+  rcvd_crc |= packet[length - 1];
+  int calc_crc = check_crc(packet, length - sizeof(rcvd_crc));
+  
+  if(rcvd_crc == calc_crc)
+    return true;
+  else
+    return false;
 }
  
 inline char address_check(char * packet)

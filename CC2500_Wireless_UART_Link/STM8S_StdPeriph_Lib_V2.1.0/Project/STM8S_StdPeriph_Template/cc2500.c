@@ -7,12 +7,109 @@
 unsigned char response_aray[65];
 extern char rid_array[4],did_val;
 extern struct Comm_Parameters a;
+char register_addr[50] = {REG_IOCFG2,\
+                          REG_IOCFG1,\
+                          REG_IOCFG0,\
+                          REG_FIFOTHR,\
+                          REG_SYNC1,\
+                          REG_SYNC0,\
+                          REG_PKTLEN,\
+                          REG_PKTCTRL1,\
+                          REG_PKTCTRL0,\
+                          REG_ADDR,\
+                          REG_CHANNR,\
+                          REG_FSCTRL1,\
+                          REG_FSCTRL0,\
+                          REG_FREQ2,\
+                          REG_FREQ1,\
+                          REG_FREQ0,\
+                          REG_MDMCFG4,\
+                          REG_MDMCFG3,\
+                          REG_MDMCFG2,\
+                          REG_MDMCFG1,\
+                          REG_MDMCFG0,\
+                          REG_DEVIATN,\
+                          REG_MCSM2,\
+                          REG_MCSM1,\
+                          REG_MCSM0,\
+                          REG_FOCCFG,\
+                          REG_BSCFG,\
+                          REG_AGCCTRL2,\
+                          REG_AGCCTRL1,\
+                          REG_AGCCTRL0,\
+                          REG_WOREVT1,\
+                          REG_WOREVT0,\
+                          REG_WORCTRL,\
+                          REG_FREND1,\
+                          REG_FREND0,\
+                          REG_FSCAL3,\
+                          REG_FSCAL2,\
+                          REG_FSCAL1,\
+                          REG_FSCAL0,\
+                          REG_RCCTRL1,\
+                          REG_RCCTRL0,\
+                          REG_FSTEST,\
+                          REG_PTEST,\
+                          REG_AGCTEST,\
+                          REG_TEST2,\
+                          REG_TEST1,\
+                          REG_TEST0
+};
+
+char register_value[50] = {VAL_IOCFG2,\
+                          VAL_IOCFG1,\
+                          VAL_IOCFG0,\
+                          VAL_FIFOTHR,\
+                          VAL_SYNC1,\
+                          VAL_SYNC0,\
+                          VAL_PKTLEN,\
+                          VAL_PKTCTRL1,\
+                          VAL_PKTCTRL0,\
+                          VAL_ADDR,\
+                          VAL_CHANNR,\
+                          VAL_FSCTRL1,\
+                          VAL_FSCTRL0,\
+                          VAL_FREQ2,\
+                          VAL_FREQ1,\
+                          VAL_FREQ0,\
+                          VAL_MDMCFG4,\
+                          VAL_MDMCFG3,\
+                          VAL_MDMCFG2,\
+                          VAL_MDMCFG1,\
+                          VAL_MDMCFG0,\
+                          VAL_DEVIATN,\
+                          VAL_MCSM2,\
+                          VAL_MCSM1,\
+                          VAL_MCSM0,\
+                          VAL_FOCCFG,\
+                          VAL_BSCFG,\
+                          VAL_AGCCTRL2,\
+                          VAL_AGCCTRL1,\
+                          VAL_AGCCTRL0,\
+                          VAL_WOREVT1,\
+                          VAL_WOREVT0,\
+                          VAL_WORCTRL,\
+                          VAL_FREND1,\
+                          VAL_FREND0,\
+                          VAL_FSCAL3,\
+                          VAL_FSCAL2,\
+                          VAL_FSCAL1,\
+                          VAL_FSCAL0,\
+                          VAL_RCCTRL1,\
+                          VAL_RCCTRL0,\
+                          VAL_FSTEST,\
+                          VAL_PTEST,\
+                          VAL_AGCTEST,\
+                          VAL_TEST2,\
+                          VAL_TEST1,\
+                          VAL_TEST0
+};
 
 void delay_ms(__IO uint32_t nTime) 
 {
   __IO uint32_t TimingDelay = 0;
   TimingDelay = nTime;
-  for(TimingDelay=0;TimingDelay<nTime;TimingDelay++);
+  for(TimingDelay=0; TimingDelay<nTime; TimingDelay++);
 }
 char Read(char add)
 {
@@ -69,7 +166,7 @@ char SendStrobe(char strobe)
 }
 void cc2500_mode(char mode)
 {
-        Delay(5000);
+        delay_ms(50000);
 	if(mode==1)
 	{
                 SendStrobe(CC2500_IDLE);
@@ -124,56 +221,60 @@ void send_data_rf(char *data)
 //    delay_ms(5000);
 }
 
-void init_CC2500(void) {
-	WriteReg(REG_IOCFG2, VAL_IOCFG2);
-	WriteReg(REG_IOCFG1, VAL_IOCFG1);
-	WriteReg(REG_IOCFG0, VAL_IOCFG0);
-//        WriteReg(REG_POWER,VAL_POWER);
-	WriteReg(REG_FIFOTHR, VAL_FIFOTHR);
-	WriteReg(REG_SYNC1, VAL_SYNC1);
-	WriteReg(REG_SYNC0, VAL_SYNC0);
-	WriteReg(REG_PKTLEN, VAL_PKTLEN);
-	WriteReg(REG_PKTCTRL1, VAL_PKTCTRL1);
-	WriteReg(REG_PKTCTRL0, VAL_PKTCTRL0);
-	WriteReg(REG_ADDR, VAL_ADDR);    //VAL_ADDR    did_val         // did added by ronak for address check.
-	WriteReg(REG_CHANNR, VAL_CHANNR);
-	WriteReg(REG_FSCTRL1, VAL_FSCTRL1);
-	WriteReg(REG_FSCTRL0, VAL_FSCTRL0);
-	WriteReg(REG_FREQ2, VAL_FREQ2);
-	WriteReg(REG_FREQ1, VAL_FREQ1);
-	WriteReg(REG_FREQ0, VAL_FREQ0);
-	WriteReg(REG_MDMCFG4, VAL_MDMCFG4);
-	WriteReg(REG_MDMCFG3, VAL_MDMCFG3);
-	WriteReg(REG_MDMCFG2, VAL_MDMCFG2);
-	WriteReg(REG_MDMCFG1, VAL_MDMCFG1);
-	WriteReg(REG_MDMCFG0, VAL_MDMCFG0);
-	WriteReg(REG_DEVIATN, VAL_DEVIATN);
-	WriteReg(REG_MCSM2, VAL_MCSM2);
-	WriteReg(REG_MCSM1, VAL_MCSM1);
-	WriteReg(REG_MCSM0, VAL_MCSM0);
-	WriteReg(REG_FOCCFG, VAL_FOCCFG);
-
-	WriteReg(REG_BSCFG, VAL_BSCFG);
-	WriteReg(REG_AGCCTRL2, VAL_AGCCTRL2);
-	WriteReg(REG_AGCCTRL1, VAL_AGCCTRL1);
-	WriteReg(REG_AGCCTRL0, VAL_AGCCTRL0);
-	WriteReg(REG_WOREVT1, VAL_WOREVT1);
-	WriteReg(REG_WOREVT0, VAL_WOREVT0);
-	WriteReg(REG_WORCTRL, VAL_WORCTRL);
-	WriteReg(REG_FREND1, VAL_FREND1);
-	WriteReg(REG_FREND0, VAL_FREND0);
-	WriteReg(REG_FSCAL3, VAL_FSCAL3);
-	WriteReg(REG_FSCAL2, VAL_FSCAL2);
-	WriteReg(REG_FSCAL1, VAL_FSCAL1);
-	WriteReg(REG_FSCAL0, VAL_FSCAL0);
-	WriteReg(REG_RCCTRL1, VAL_RCCTRL1);
-	WriteReg(REG_RCCTRL0, VAL_RCCTRL0);
-	WriteReg(REG_FSTEST, VAL_FSTEST);
-	WriteReg(REG_PTEST, VAL_PTEST);
-	WriteReg(REG_AGCTEST, VAL_AGCTEST);
-	WriteReg(REG_TEST2, VAL_TEST2);
-	WriteReg(REG_TEST1, VAL_TEST1);
-	WriteReg(REG_TEST0, VAL_TEST0);
+void init_CC2500(void)
+{
+  char i;
+  for(i = 0; i < strlen(register_addr); i++)
+    WriteReg(register_addr[i], register_value[i]);
+//	WriteReg(REG_IOCFG2, VAL_IOCFG2);
+//	WriteReg(REG_IOCFG1, VAL_IOCFG1);
+//	WriteReg(REG_IOCFG0, VAL_IOCFG0);
+////        WriteReg(REG_POWER,VAL_POWER);
+//	WriteReg(REG_FIFOTHR, VAL_FIFOTHR);
+//	WriteReg(REG_SYNC1, VAL_SYNC1);
+//	WriteReg(REG_SYNC0, VAL_SYNC0);
+//	WriteReg(REG_PKTLEN, VAL_PKTLEN);
+//	WriteReg(REG_PKTCTRL1, VAL_PKTCTRL1);
+//	WriteReg(REG_PKTCTRL0, VAL_PKTCTRL0);
+//	WriteReg(REG_ADDR, VAL_ADDR);    //VAL_ADDR    did_val         // did added by ronak for address check.
+//	WriteReg(REG_CHANNR, VAL_CHANNR);
+//	WriteReg(REG_FSCTRL1, VAL_FSCTRL1);
+//	WriteReg(REG_FSCTRL0, VAL_FSCTRL0);
+//	WriteReg(REG_FREQ2, VAL_FREQ2);
+//	WriteReg(REG_FREQ1, VAL_FREQ1);
+//	WriteReg(REG_FREQ0, VAL_FREQ0);
+//	WriteReg(REG_MDMCFG4, VAL_MDMCFG4);
+//	WriteReg(REG_MDMCFG3, VAL_MDMCFG3);
+//	WriteReg(REG_MDMCFG2, VAL_MDMCFG2);
+//	WriteReg(REG_MDMCFG1, VAL_MDMCFG1);
+//	WriteReg(REG_MDMCFG0, VAL_MDMCFG0);
+//	WriteReg(REG_DEVIATN, VAL_DEVIATN);
+//	WriteReg(REG_MCSM2, VAL_MCSM2);
+//	WriteReg(REG_MCSM1, VAL_MCSM1);
+//	WriteReg(REG_MCSM0, VAL_MCSM0);
+//	WriteReg(REG_FOCCFG, VAL_FOCCFG);
+//
+//	WriteReg(REG_BSCFG, VAL_BSCFG);
+//	WriteReg(REG_AGCCTRL2, VAL_AGCCTRL2);
+//	WriteReg(REG_AGCCTRL1, VAL_AGCCTRL1);
+//	WriteReg(REG_AGCCTRL0, VAL_AGCCTRL0);
+//	WriteReg(REG_WOREVT1, VAL_WOREVT1);
+//	WriteReg(REG_WOREVT0, VAL_WOREVT0);
+//	WriteReg(REG_WORCTRL, VAL_WORCTRL);
+//	WriteReg(REG_FREND1, VAL_FREND1);
+//	WriteReg(REG_FREND0, VAL_FREND0);
+//	WriteReg(REG_FSCAL3, VAL_FSCAL3);
+//	WriteReg(REG_FSCAL2, VAL_FSCAL2);
+//	WriteReg(REG_FSCAL1, VAL_FSCAL1);
+//	WriteReg(REG_FSCAL0, VAL_FSCAL0);
+//	WriteReg(REG_RCCTRL1, VAL_RCCTRL1);
+//	WriteReg(REG_RCCTRL0, VAL_RCCTRL0);
+//	WriteReg(REG_FSTEST, VAL_FSTEST);
+//	WriteReg(REG_PTEST, VAL_PTEST);
+//	WriteReg(REG_AGCTEST, VAL_AGCTEST);
+//	WriteReg(REG_TEST2, VAL_TEST2);
+//	WriteReg(REG_TEST1, VAL_TEST1);
+//	WriteReg(REG_TEST0, VAL_TEST0);
 	/*
 	 WriteReg(REG_RTNUM,VAL_PARTNUM);
 	 WriteReg(REG_VERSION,VAL_VERSION);

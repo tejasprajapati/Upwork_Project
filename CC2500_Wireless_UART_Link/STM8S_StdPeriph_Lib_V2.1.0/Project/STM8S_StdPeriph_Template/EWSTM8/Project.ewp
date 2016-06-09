@@ -1593,7 +1593,7 @@
         <debug>1</debug>
         <option>
           <name>GenDeviceSelectMenu</name>
-          <state>STM8S105C6	STM8S105C6</state>
+          <state>STM8S105K4	STM8S105K4</state>
         </option>
         <option>
           <name>GenCodeModel</name>
@@ -1646,7 +1646,7 @@
         </option>
         <option>
           <name>GenLibInFormatterDescription</name>
-          <state>No specifier n, no float, no scan set, no assignment suppressing.</state>
+          <state>Full formatting, without multibytes.</state>
         </option>
         <option>
           <name>GenLibOutFormatter</name>
@@ -1655,7 +1655,7 @@
         </option>
         <option>
           <name>GenLibOutFormatterDescription</name>
-          <state>No specifier a or A, no specifier n, no float.</state>
+          <state>Full formatting, without multibytes.</state>
         </option>
         <option>
           <name>GenStackSize</name>
@@ -1714,7 +1714,7 @@
         </option>
         <option>
           <name>IccOptLevel</name>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccOptStrategy</name>
@@ -1723,12 +1723,12 @@
         </option>
         <option>
           <name>IccOptLevelSlave</name>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccOptAllowList</name>
           <version>0</version>
-          <state>111111</state>
+          <state>000000</state>
         </option>
         <option>
           <name>IccGenerateDebugInfo</name>
@@ -2377,7 +2377,7 @@
         <debug>1</debug>
         <option>
           <name>GenDeviceSelectMenu</name>
-          <state>STM8S003F3	STM8S003F3</state>
+          <state>STM8S103F3P	STM8S103F3P</state>
         </option>
         <option>
           <name>GenCodeModel</name>
@@ -2498,21 +2498,21 @@
         </option>
         <option>
           <name>IccOptLevel</name>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccOptStrategy</name>
           <version>0</version>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccOptLevelSlave</name>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccOptAllowList</name>
           <version>0</version>
-          <state>111111</state>
+          <state>000000</state>
         </option>
         <option>
           <name>IccGenerateDebugInfo</name>

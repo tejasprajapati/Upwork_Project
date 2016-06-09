@@ -7,9 +7,9 @@
  * Modify the typedef for a 16 or 32-bit CRC standard.
  */
 
-char crcSlow(char const *message, int nBytes)
+int check_crc(char const *message, int nBytes)
 {
-    char remainder = 0;	
+    int remainder = 0;	
     /*
      * Perform modulo-2 division, a byte at a time.
      */
@@ -45,24 +45,3 @@ char crcSlow(char const *message, int nBytes)
     return (remainder);
 
 }   /* crcSlow() */
-
-//char crcFast(char const *message, int nBytes)
-//{
-//    char data;
-//    char remainder = 0;
-//
-//    /*
-//     * Divide the message by the polynomial, a byte at a time.
-//     */
-//    for (int byte = 0; byte < nBytes; ++byte)
-//    {
-//        data = message[byte] ^ (remainder >> (WIDTH - 8));
-//        remainder = crcTable[data] ^ (remainder << 8);
-//    }
-//
-//    /*
-//     * The final remainder is the CRC.
-//     */
-//    return (remainder);
-//
-//}   /* crcFast() */

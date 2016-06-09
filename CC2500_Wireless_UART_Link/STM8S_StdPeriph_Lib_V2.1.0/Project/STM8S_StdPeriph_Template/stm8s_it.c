@@ -159,14 +159,20 @@ INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
   if((GPIO_ReadInputData(GPIOC) & GPIO_PIN_3) == 0x00)                            /*GDO0 interrupt pin*/
   {
     char i,rx_length = 0;
+    char crc_check_buff[MAX_BUF_SIZE];
     memset(Uart_send_buff, 0, MAX_BUF_SIZE);						/* clearing the array.*/
+    memset(crc_check_buff, 0, MAX_BUF_SIZE);						/* clearing the array.*/
     
     rx_length = Read(CC2500_RXFIFO);
     for (i = 0; i < rx_length ; i++) 							/* Reading the data from the fifo*/
     {
       Uart_send_buff[i] = Read(CC2500_RXFIFO);
     }
-    if(crc_ok(Uart_send_buff))
+    
+    crc_check_buff[0] = rx_length;
+    strcat(crc_check_buff, Uart_send_buff);
+    
+    if(crc_ok(crc_check_buff, strlen(crc_check_buff)))
     {
       if(address_check(Uart_send_buff))
       {
