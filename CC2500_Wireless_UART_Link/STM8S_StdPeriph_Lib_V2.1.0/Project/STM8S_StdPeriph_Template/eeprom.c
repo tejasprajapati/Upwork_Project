@@ -10,8 +10,9 @@ void write_data_to_eeprom(char change_data)
     /* Unlock Data memory */
     FLASH_Unlock(FLASH_MEMTYPE_DATA);
  
-    if(change_data == 1)
+    switch(change_data)
     {
+      case 1:
       write_array_to_eeprom(baud_rate_addr,baud_rate_array);
       write_array_to_eeprom(did_addr,did_array);
       write_array_to_eeprom(ch_no_addr,cid_array);
@@ -19,14 +20,14 @@ void write_data_to_eeprom(char change_data)
 //      write_array_to_eeprom(rid_addr,rid_array);  need to discuss.
       
       change_data = 0;
-    } 
-    else if(change_data == 0)
-    {
+      break;
+      case 2:
       write_array_to_eeprom(baud_rate_addr,"38400");
       write_array_to_eeprom(did_addr,"002");
       write_array_to_eeprom(ch_no_addr,"11");
       write_array_to_eeprom(mode_addr,"B");
 //      write_array_to_eeprom(rid_addr,rid_array); need to discuss.
+      break;
     }
 }
 

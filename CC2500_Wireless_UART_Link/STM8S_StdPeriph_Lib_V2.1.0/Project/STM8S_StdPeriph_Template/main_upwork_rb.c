@@ -36,7 +36,7 @@ int main (void)
 {
   clk_init();
   gpio_init();
-//  write_data_to_eeprom(default);
+  write_data_to_eeprom(default);
   read_data_from_eeprom();
   uart_init(baudrate);
   spi_init();
@@ -52,10 +52,10 @@ int main (void)
     {
       if(a.data_complete)
       {
-//        handle_uart_request(uart_rcv_buff);
-//        write_data_to_eeprom(change);
-//        read_data_from_eeprom();
-//        a.data_complete = 0;
+        handle_uart_request(uart_rcv_buff);
+        write_data_to_eeprom(change);
+        read_data_from_eeprom();
+        a.data_complete = 0;
       }
     }
     if(a.data_received_from_RF)
@@ -111,7 +111,7 @@ void spi_init(void)
            SPI_CLOCKPOLARITY_LOW, SPI_CLOCKPHASE_1EDGE, SPI_DATADIRECTION_2LINES_FULLDUPLEX,
            SPI_NSS_SOFT, 0x07);
   
-  delay_ms(4095);
+  delay_ms(1000);
                                                                                                         /* SD_SPI enable */
   SPI_Cmd( ENABLE);
   
