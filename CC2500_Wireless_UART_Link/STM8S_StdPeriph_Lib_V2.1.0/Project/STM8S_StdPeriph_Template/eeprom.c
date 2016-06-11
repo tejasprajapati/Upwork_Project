@@ -13,8 +13,14 @@ void write_data_to_eeprom(void)
     /* Unlock Data memory */
     FLASH_Unlock(FLASH_MEMTYPE_DATA);
  
-    if(a.change == 1)
+//new    
+    if(a.change == 0)
     {   
+       strcpy(baud_rate_array,"38400");
+       strcpy(did_array,"002");
+       strcpy(cid_array,"11");
+       strcpy(mode_array,"B");
+    }
       write_array_to_eeprom(baud_rate_addr,baud_rate_array);
       write_array_to_eeprom(did_addr,did_array);
       write_array_to_eeprom(ch_no_addr,cid_array);
@@ -22,15 +28,31 @@ void write_data_to_eeprom(void)
 //      write_array_to_eeprom(rid_addr,rid_array);  need to discuss.
       
       a.change = 0;
-    }
-    else if(a.change == 0)
-    {
-      write_array_to_eeprom(baud_rate_addr,"38400");
-      write_array_to_eeprom(did_addr,"002");
-      write_array_to_eeprom(ch_no_addr,"11");
-      write_array_to_eeprom(mode_addr,"B");
-//      write_array_to_eeprom(rid_addr,rid_array); need to discuss.
-    }
+//    }
+
+//old
+
+//    if(a.change == 1)
+//    {   
+//      write_array_to_eeprom(baud_rate_addr,baud_rate_array);
+//      write_array_to_eeprom(did_addr,did_array);
+//      write_array_to_eeprom(ch_no_addr,cid_array);
+//      write_array_to_eeprom(mode_addr,mode_array);
+////      write_array_to_eeprom(rid_addr,rid_array);  need to discuss.
+//      
+//      a.change = 0;
+//    }
+//    else if(a.change == 0)
+//    {
+//      write_array_to_eeprom(baud_rate_addr,"38400");
+//      write_array_to_eeprom(did_addr,"002");
+//      write_array_to_eeprom(ch_no_addr,"11");
+//      write_array_to_eeprom(mode_addr,"B");
+////      write_array_to_eeprom(rid_addr,rid_array); need to discuss.
+//    }
+      
+      
+      read_data_from_eeprom();
 }
 
 void read_data_from_eeprom()

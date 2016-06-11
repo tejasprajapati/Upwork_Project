@@ -5,7 +5,6 @@
 #include "stm8s_gpio.h"
 #include "stm8s.h"
 #include "stdlib.h"
-//#include"global.h"
 /*
 #define SS_T TRISBbits.TRISB2
 #define SS PORTBbits.RB2//as connect to CS of CC pin//SS1
@@ -232,6 +231,7 @@ void send_ack(char *);
 #define VAL_TEST1            0x31//default
 #define VAL_TEST0            0x0B//default
 /*********************************************************************/
+/*
 #define VAL_PARTNUM          0x80//default
 #define VAL_VERSION          0x03//default
 #define VAL_FREQEST          0x00//default
@@ -246,7 +246,7 @@ void send_ack(char *);
 #define VAL_RXBYTES          0x00//default
 #define VAL_RCCTRL1_STATUS   0x00//default
 #define VAL_RCCTRL0_STATUS   0x00//default
-
+*/
 
 /*************************************************************************************/
 

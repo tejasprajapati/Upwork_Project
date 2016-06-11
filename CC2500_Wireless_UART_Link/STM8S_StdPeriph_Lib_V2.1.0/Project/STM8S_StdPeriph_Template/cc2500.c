@@ -4,7 +4,7 @@
 #include "at_command.h"
 
 
-unsigned char response_aray[65];
+//unsigned char response_aray[65];
 extern char rid_array[4],did_val;
 extern struct Comm_Parameters a;
 static const char register_addr[47] = {REG_IOCFG2,\
@@ -162,21 +162,19 @@ char SendStrobe(char strobe)
 	out = SPI_ReceiveData(); 
 
 	ss_high;	// hi
+        
+        delay_ms(5);
 	return out;
+        
 }
 void cc2500_mode(char mode)
 {
         delay_ms(50000);
+        SendStrobe(CC2500_IDLE);
 	if(mode==1)
 	{
-                SendStrobe(CC2500_IDLE);
                 SendStrobe(CC2500_FRX);
 		SendStrobe(CC2500_RX);				//	RX: enable RX
-	}
-	else if(mode == 0)
-	{
-	//	SendStrobe(CC2500_TX);				// TX mode enable (need to think about logic)
-		SendStrobe(CC2500_IDLE);
 	}
 }
 void send_data_rf(char *data) 
@@ -201,11 +199,11 @@ void send_data_rf(char *data)
     }
 
     SendStrobe(CC2500_IDLE);                                                    /*Make sure that the radio is in IDLE state before flushing the FIFO*/
-    delay_ms(5);
+//    delay_ms(5);
     SendStrobe(CC2500_FTX);                                                     /*Flush TX FIFO*/
-    delay_ms(5);
+//    delay_ms(5);
     SendStrobe(CC2500_IDLE);	                                                /*SIDLE: exit RX/TX*/
-    delay_ms(5);
+//    delay_ms(5);
 
     for (i = 0; i < length; i++) 
     {
@@ -219,6 +217,7 @@ void send_data_rf(char *data)
     while(GPIOC->IDR & GPIO_PIN_3);                                             /*Wait for GDO0 to be cleared -> end of packet*/	
     GPIO_Init(GPIOC,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);                              /*GDO0 IT enable*/
 //    delay_ms(5000);
+    cc2500_mode(1);
 }
 
 void init_CC2500(void)
@@ -292,23 +291,21 @@ void init_CC2500(void)
 	 WriteReg(REG_RCCTRL0_STATUS,VAL_RCCTRL0_STATUS);
 	 */
 }
-void Read_Config_Regs(void)
-{
-	unsigned int addr = 0,inc=0;
-	for(inc=0;inc<99;inc++)
-	{
-            response_aray[inc]=Read(addr++);
-	}
-}
+//void Read_Config_Regs(void)
+//{
+//	unsigned int addr = 0,inc=0;
+//	for(inc=0;inc<99;inc++)
+//	{
+//            response_aray[inc]=Read(addr++);
+//	}
+//}
 void setup(void) 
 {
 	ss_high;
-//	SS=1;
-
 	delay_ms(1000);
-//        Read_Config_Regs();
+//      Read_Config_Regs();
 	init_CC2500();
-//        Read_Config_Regs();
+//      Read_Config_Regs();
 //	delay_ms(1000);
         cc2500_mode(1);  //configure device in rx/tx mode (1 - rx ,0 - tx) 
 }
