@@ -255,19 +255,19 @@ void UART1_ITConfig(UART1_IT_TypeDef UART1_IT, FunctionalState NewState)
   *         This parameter can be: ENABLE or DISABLE.
   * @retval None
   */
-void UART1_HalfDuplexCmd(FunctionalState NewState)
-{
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    if (NewState != DISABLE)
-    {
-        UART1->CR5 |= UART1_CR5_HDSEL;  /**< UART1 Half Duplex Enable  */
-    }
-    else
-    {
-        UART1->CR5 &= (uint8_t)~UART1_CR5_HDSEL; /**< UART1 Half Duplex Disable */
-    }
-}
+//void UART1_HalfDuplexCmd(FunctionalState NewState)
+//{
+//    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+//
+//    if (NewState != DISABLE)
+//    {
+//        UART1->CR5 |= UART1_CR5_HDSEL;  /**< UART1 Half Duplex Enable  */
+//    }
+//    else
+//    {
+//        UART1->CR5 &= (uint8_t)~UART1_CR5_HDSEL; /**< UART1 Half Duplex Disable */
+//    }
+//}
 
 /**
   * @brief  Configures the UART’s IrDA interface.
@@ -275,7 +275,7 @@ void UART1_HalfDuplexCmd(FunctionalState NewState)
   *         This parameter can be any of the @ref UART1_IrDAMode_TypeDef values.
   * @retval None
   */
-void UART1_IrDAConfig(UART1_IrDAMode_TypeDef UART1_IrDAMode)
+/*void UART1_IrDAConfig(UART1_IrDAMode_TypeDef UART1_IrDAMode)
 {
     assert_param(IS_UART1_IRDAMODE_OK(UART1_IrDAMode));
 
@@ -287,7 +287,7 @@ void UART1_IrDAConfig(UART1_IrDAMode_TypeDef UART1_IrDAMode)
     {
         UART1->CR5 &= ((uint8_t)~UART1_CR5_IRLP);
     }
-}
+}*/
 
 /**
   * @brief  Enables or disables the UART’s IrDA interface.
@@ -295,23 +295,23 @@ void UART1_IrDAConfig(UART1_IrDAMode_TypeDef UART1_IrDAMode)
   *         This parameter can be: ENABLE or DISABLE.
   * @retval None
   */
-void UART1_IrDACmd(FunctionalState NewState)
-{
-
-    /* Check parameters */
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    if (NewState != DISABLE)
-    {
-        /* Enable the IrDA mode by setting the IREN bit in the CR3 register */
-        UART1->CR5 |= UART1_CR5_IREN;
-    }
-    else
-    {
-        /* Disable the IrDA mode by clearing the IREN bit in the CR3 register */
-        UART1->CR5 &= ((uint8_t)~UART1_CR5_IREN);
-    }
-}
+//void UART1_IrDACmd(FunctionalState NewState)
+//{
+//
+//    /* Check parameters */
+//    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+//
+//    if (NewState != DISABLE)
+//    {
+//        /* Enable the IrDA mode by setting the IREN bit in the CR3 register */
+//        UART1->CR5 |= UART1_CR5_IREN;
+//    }
+//    else
+//    {
+//        /* Disable the IrDA mode by clearing the IREN bit in the CR3 register */
+//        UART1->CR5 &= ((uint8_t)~UART1_CR5_IREN);
+//    }
+//}
 
 /**
   * @brief  Sets the UART1 LIN Break detection length.
@@ -320,7 +320,7 @@ void UART1_IrDACmd(FunctionalState NewState)
   *         @ref UART1_LINBreakDetectionLength_TypeDef values.
   * @retval None
   */
-void UART1_LINBreakDetectionConfig(UART1_LINBreakDetectionLength_TypeDef UART1_LINBreakDetectionLength)
+/*void UART1_LINBreakDetectionConfig(UART1_LINBreakDetectionLength_TypeDef UART1_LINBreakDetectionLength)
 {
     assert_param(IS_UART1_LINBREAKDETECTIONLENGTH_OK(UART1_LINBreakDetectionLength));
 
@@ -332,7 +332,7 @@ void UART1_LINBreakDetectionConfig(UART1_LINBreakDetectionLength_TypeDef UART1_L
     {
         UART1->CR4 &= ((uint8_t)~UART1_CR4_LBDL);
     }
-}
+}*/
 
 /**
   * @brief  Enables or disables the UART1’s LIN mode.
@@ -340,42 +340,42 @@ void UART1_LINBreakDetectionConfig(UART1_LINBreakDetectionLength_TypeDef UART1_L
   *         This parameter can be: ENABLE or DISABLE.
   * @retval None
   */
-void UART1_LINCmd(FunctionalState NewState)
-{
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    if (NewState != DISABLE)
-    {
-        /* Enable the LIN mode by setting the LINE bit in the CR2 register */
-        UART1->CR3 |= UART1_CR3_LINEN;
-    }
-    else
-    {
-        /* Disable the LIN mode by clearing the LINE bit in the CR2 register */
-        UART1->CR3 &= ((uint8_t)~UART1_CR3_LINEN);
-    }
-}
+//void UART1_LINCmd(FunctionalState NewState)
+//{
+//    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+//
+//    if (NewState != DISABLE)
+//    {
+//        /* Enable the LIN mode by setting the LINE bit in the CR2 register */
+//        UART1->CR3 |= UART1_CR3_LINEN;
+//    }
+//    else
+//    {
+//        /* Disable the LIN mode by clearing the LINE bit in the CR2 register */
+//        UART1->CR3 &= ((uint8_t)~UART1_CR3_LINEN);
+//    }
+//}
 /**
   * @brief  Enables or disables the UART1 Smart Card mode.
   * @param  NewState: new state of the Smart Card mode.
   * This parameter can be: ENABLE or DISABLE.
   * @retval None
   */
-void UART1_SmartCardCmd(FunctionalState NewState)
-{
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    if (NewState != DISABLE)
-    {
-        /* Enable the SC mode by setting the SCEN bit in the CR5 register */
-        UART1->CR5 |= UART1_CR5_SCEN;
-    }
-    else
-    {
-        /* Disable the SC mode by clearing the SCEN bit in the CR5 register */
-        UART1->CR5 &= ((uint8_t)(~UART1_CR5_SCEN));
-    }
-}
+//void UART1_SmartCardCmd(FunctionalState NewState)
+//{
+//    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+//
+//    if (NewState != DISABLE)
+//    {
+//        /* Enable the SC mode by setting the SCEN bit in the CR5 register */
+//        UART1->CR5 |= UART1_CR5_SCEN;
+//    }
+//    else
+//    {
+//        /* Disable the SC mode by clearing the SCEN bit in the CR5 register */
+//        UART1->CR5 &= ((uint8_t)(~UART1_CR5_SCEN));
+//    }
+//}
 
 /**
   * @brief  Enables or disables NACK transmission.
@@ -384,21 +384,21 @@ void UART1_SmartCardCmd(FunctionalState NewState)
   *         This parameter can be: ENABLE or DISABLE.
   * @retval None
   */
-void UART1_SmartCardNACKCmd(FunctionalState NewState)
-{
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    if (NewState != DISABLE)
-    {
-        /* Enable the NACK transmission by setting the NACK bit in the CR5 register */
-        UART1->CR5 |= UART1_CR5_NACK;
-    }
-    else
-    {
-        /* Disable the NACK transmission by clearing the NACK bit in the CR5 register */
-        UART1->CR5 &= ((uint8_t)~(UART1_CR5_NACK));
-    }
-}
+//void UART1_SmartCardNACKCmd(FunctionalState NewState)
+//{
+//    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+//
+//    if (NewState != DISABLE)
+//    {
+//        /* Enable the NACK transmission by setting the NACK bit in the CR5 register */
+//        UART1->CR5 |= UART1_CR5_NACK;
+//    }
+//    else
+//    {
+//        /* Disable the NACK transmission by clearing the NACK bit in the CR5 register */
+//        UART1->CR5 &= ((uint8_t)~(UART1_CR5_NACK));
+//    }
+//}
 
 /**
   * @brief  Selects the UART1 WakeUp method.
@@ -406,34 +406,34 @@ void UART1_SmartCardNACKCmd(FunctionalState NewState)
   *         This parameter can be any of the @ref UART1_WakeUp_TypeDef values.
   * @retval None
   */
-void UART1_WakeUpConfig(UART1_WakeUp_TypeDef UART1_WakeUp)
-{
-    assert_param(IS_UART1_WAKEUP_OK(UART1_WakeUp));
-
-    UART1->CR1 &= ((uint8_t)~UART1_CR1_WAKE);
-    UART1->CR1 |= (uint8_t)UART1_WakeUp;
-}
+//void UART1_WakeUpConfig(UART1_WakeUp_TypeDef UART1_WakeUp)
+//{
+//    assert_param(IS_UART1_WAKEUP_OK(UART1_WakeUp));
+//
+//    UART1->CR1 &= ((uint8_t)~UART1_CR1_WAKE);
+//    UART1->CR1 |= (uint8_t)UART1_WakeUp;
+//}
 /**
   * @brief  Determines if the UART1 is in mute mode or not.
   * @param  NewState: new state of the UART1 mode.
   *         This parameter can be: ENABLE or DISABLE.
   * @retval None
   */
-void UART1_ReceiverWakeUpCmd(FunctionalState NewState)
-{
-    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
-
-    if (NewState != DISABLE)
-    {
-        /* Enable the mute mode UART1 by setting the RWU bit in the CR2 register */
-        UART1->CR2 |= UART1_CR2_RWU;
-    }
-    else
-    {
-        /* Disable the mute mode UART1 by clearing the RWU bit in the CR1 register */
-        UART1->CR2 &= ((uint8_t)~UART1_CR2_RWU);
-    }
-}
+//void UART1_ReceiverWakeUpCmd(FunctionalState NewState)
+//{
+//    assert_param(IS_FUNCTIONALSTATE_OK(NewState));
+//
+//    if (NewState != DISABLE)
+//    {
+//        /* Enable the mute mode UART1 by setting the RWU bit in the CR2 register */
+//        UART1->CR2 |= UART1_CR2_RWU;
+//    }
+//    else
+//    {
+//        /* Disable the mute mode UART1 by clearing the RWU bit in the CR1 register */
+//        UART1->CR2 &= ((uint8_t)~UART1_CR2_RWU);
+//    }
+//}
 
 /**
   * @brief  Returns the most recent received data by the UART1 peripheral.
@@ -475,15 +475,15 @@ void UART1_SendData8(uint8_t Data)
   *         This parameter should be lower than 0x1FF.
   * @retval None
   */
-void UART1_SendData9(uint16_t Data)
-{
-    /**< Clear the transmit data bit 8 [8]  */
-    UART1->CR1 &= ((uint8_t)~UART1_CR1_T8);
-    /**< Write the transmit data bit [8]  */
-    UART1->CR1 |= (uint8_t)(((uint8_t)(Data >> 2)) & UART1_CR1_T8);
-    /**< Write the transmit data bit [0:7] */
-    UART1->DR   = (uint8_t)(Data);
-}
+//void UART1_SendData9(uint16_t Data)
+//{
+//    /**< Clear the transmit data bit 8 [8]  */
+//    UART1->CR1 &= ((uint8_t)~UART1_CR1_T8);
+//    /**< Write the transmit data bit [8]  */
+//    UART1->CR1 |= (uint8_t)(((uint8_t)(Data >> 2)) & UART1_CR1_T8);
+//    /**< Write the transmit data bit [0:7] */
+//    UART1->DR   = (uint8_t)(Data);
+//}
 
 /**
   * @brief  Transmits break characters.
@@ -500,16 +500,16 @@ void UART1_SendBreak(void)
   * @param  UART1_Address: Indicates the address of the UART1 node.
   * @retval None
   */
-void UART1_SetAddress(uint8_t UART1_Address)
-{
-    /*assert_param for UART1_Address*/
-    assert_param(IS_UART1_ADDRESS_OK(UART1_Address));
-
-    /* Clear the UART1 address */
-    UART1->CR4 &= ((uint8_t)~UART1_CR4_ADD);
-    /* Set the UART1 address node */
-    UART1->CR4 |= UART1_Address;
-}
+//void UART1_SetAddress(uint8_t UART1_Address)
+//{
+//    /*assert_param for UART1_Address*/
+//    assert_param(IS_UART1_ADDRESS_OK(UART1_Address));
+//
+//    /* Clear the UART1 address */
+//    UART1->CR4 &= ((uint8_t)~UART1_CR4_ADD);
+//    /* Set the UART1 address node */
+//    UART1->CR4 |= UART1_Address;
+//}
 
 /**
   * @brief  Sets the specified UART guard time.
@@ -517,11 +517,11 @@ void UART1_SetAddress(uint8_t UART1_Address)
   * @param  UART1_GuardTime: specifies the guard time.
   * @retval None
   */
-void UART1_SetGuardTime(uint8_t UART1_GuardTime)
-{
-    /* Set the UART1 guard time */
-    UART1->GTR = UART1_GuardTime;
-}
+//void UART1_SetGuardTime(uint8_t UART1_GuardTime)
+//{
+//    /* Set the UART1 guard time */
+//    UART1->GTR = UART1_GuardTime;
+//}
 
 /**
   * @brief  Sets the system clock prescaler.

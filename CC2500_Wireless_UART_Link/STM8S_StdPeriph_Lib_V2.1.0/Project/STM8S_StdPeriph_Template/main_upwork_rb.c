@@ -12,10 +12,9 @@
 #define false 0
 //#define command_mode switch_position
 
-unsigned int ack_received, command_mode, change;
+//unsigned int ack_received, command_mode, change;
 unsigned long baudrate,wait_count;
 char baud_rate_array[8],did_array[5],cid_array[4],rid_array[4],mode_array[2],did_val;
-bool data_complete,exit_command_mode;
 char RF_send_buff[MAX_BUF_SIZE];
 char Uart_send_buff[MAX_BUF_SIZE];
 char uart_rcv_buff[MAX_BUF_SIZE];
@@ -25,7 +24,7 @@ void clk_init(void);
 void Delay (uint16_t nCount);
 void handle_uart_request(char *);
 void check_for_parameter(char *, char); 
-void write_data_to_eeprom(bool);
+void write_data_to_eeprom(void);
 void Read_data_from_eeprom (void);
 void gpio_init(void);
 void spi_init(void);
@@ -36,7 +35,7 @@ int main (void)
 {
   clk_init();
   gpio_init();
-  write_data_to_eeprom(default);
+//  write_data_to_eeprom(default);
   read_data_from_eeprom();
   uart_init(baudrate);
   spi_init();
@@ -48,12 +47,12 @@ int main (void)
     
 //    a.data_received_from_UART = 1;  // just for testing of cc2500
 //    Delay(5000);
-    while(command_mode)
+    while(a.command_mode)
     {
       if(a.data_complete)
       {
         handle_uart_request(uart_rcv_buff);
-        write_data_to_eeprom(change);
+        write_data_to_eeprom();
         read_data_from_eeprom();
         a.data_complete = 0;
       }
@@ -67,7 +66,7 @@ int main (void)
     {
         int crc_got = 0;
         char length = strlen(RF_send_buff);
-        ack_received = 0;
+        a.ack_received = 0;
         crc_got = check_crc(RF_send_buff, length);
         RF_send_buff[length] = ((crc_got & 0xFF00) >> 8);
         RF_send_buff[length + 1] = (crc_got & 0x00FF);
@@ -75,7 +74,7 @@ int main (void)
         cc2500_mode(1);
         
         wait_count = 0;
-        while((ack_received == 0) && wait_count++ <= 99999 );  // during testing received ack within 10000 count.//rb
+        while((a.ack_received == 0) && wait_count++ <= 99999 );  // during testing received ack within 10000 count.//rb
         if(wait_count >= 99999)
         send_data_rf(RF_send_buff);
         cc2500_mode(1);
@@ -158,7 +157,7 @@ inline char no_ack_msg(char *packet)
   }
   else
   {
-    ack_received = 1;
+    a.ack_received = 1;
     return false;
   }
 }
@@ -200,7 +199,7 @@ void handle_uart_request(char * uart_req)
         ptr = strstr(uart_req,"RST");
         if(ptr != NULL)
         {
-          change = default;
+          a.change = default;
         }
      }
   }
@@ -214,7 +213,7 @@ void check_for_parameter(char * parameter , char edit)                          
       if(edit)
       {
         strcpy(baud_rate_array,parameter + 6);
-        change = 1;
+        a.change = 1;
       }
       else
       {
@@ -226,7 +225,7 @@ void check_for_parameter(char * parameter , char edit)                          
       if(edit)
       {
         strcpy(cid_array,parameter + 7);
-        change = 1;
+        a.change = 1;
       }
       else
       {
@@ -238,7 +237,7 @@ void check_for_parameter(char * parameter , char edit)                          
       if(edit)
       {
         strcpy(did_array,parameter + 7);
-        change = 1;
+        a.change = 1;
       }
       else
       {
@@ -250,7 +249,7 @@ void check_for_parameter(char * parameter , char edit)                          
       if(edit)
       {
         strcpy(rid_array,parameter + 7);
-        change = 1;
+        a.change = 1;
       }
       else
       {
@@ -262,7 +261,7 @@ void check_for_parameter(char * parameter , char edit)                          
       if(edit)
       {
         strcpy(mode_array,parameter + 8);
-        change = 1;
+        a.change = 1;
       }
       else
       {

@@ -5,6 +5,19 @@ unsigned char index = 0;
 
 void uart_init(long baudrate)
 {
+  switch(baudrate)
+  {
+  case 4800:
+  case 9600:
+  case 19200:
+  case 38400:
+  case 57600:
+  case 115200:
+    break;
+  default:
+    baudrate = 9600;
+    break;
+  }
   UART1_Init((uint32_t)baudrate, UART1_WORDLENGTH_8D,UART1_STOPBITS_1, UART1_PARITY_NO,
                    UART1_SYNCMODE_CLOCK_DISABLE, UART1_MODE_TXRX_ENABLE);
 

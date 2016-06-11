@@ -14,7 +14,7 @@ extern char baud_rate_array[8],did_array[5],cid_array[4],rid_array[4],mode_array
 
 void write_array_to_eeprom(uint32_t, char *);
 void read_array_from_eeprom(uint32_t,char *);
-void write_data_to_eeprom(char );
-void read_data_from_eeprom();
+void write_data_to_eeprom(void);
+void read_data_from_eeprom(void);
 
 #endif

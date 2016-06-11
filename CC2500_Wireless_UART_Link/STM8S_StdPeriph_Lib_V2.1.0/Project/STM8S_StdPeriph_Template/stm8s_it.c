@@ -32,7 +32,7 @@
     
 extern struct Comm_Parameters a;
 extern unsigned int command_mode;
-extern char uart_rcv_buff[50],RF_send_buff[MAX_BUF_SIZE],Uart_send_buff[MAX_BUF_SIZE];
+extern char uart_rcv_buff[MAX_BUF_SIZE],RF_send_buff[MAX_BUF_SIZE],Uart_send_buff[MAX_BUF_SIZE];
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -207,7 +207,7 @@ INTERRUPT_HANDLER(EXTI_PORTD_IRQHandler, 6)
 {
   if(GPIO_ReadInputData(GPIOD) & GPIO_PIN_3 == 0x00)                            /*Switch interrupt pin*/
   {
-    command_mode ^= 1;                                                          /*Toggle the command mode*/
+    a.command_mode ^= 1;                                                          /*Toggle the command mode*/
   }
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
@@ -428,7 +428,7 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
     
 //    index = 0;
     //command_mode = 1;  // temporary for testing
-    if(command_mode)
+    if(a.command_mode)
     {
 //      if(strncmp(uart_rcv_buff,"EXIT",4)==0)
 //      {

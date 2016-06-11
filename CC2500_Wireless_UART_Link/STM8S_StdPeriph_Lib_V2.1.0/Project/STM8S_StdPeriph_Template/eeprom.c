@@ -1,8 +1,11 @@
 #include "eeprom.h"
 #include "stdlib.h"
+#include "at_command.h"
 extern char baud_rate_array[8],did_array[5],cid_array[4],rid_array[4],mode_array[2],did_val;
 extern unsigned long baudrate;
-void write_data_to_eeprom(char change_data)
+extern struct Comm_Parameters a;
+
+void write_data_to_eeprom(void)
 {
   /* Define FLASH programming time */
     FLASH_SetProgrammingTime(FLASH_PROGRAMTIME_STANDARD);
@@ -10,24 +13,23 @@ void write_data_to_eeprom(char change_data)
     /* Unlock Data memory */
     FLASH_Unlock(FLASH_MEMTYPE_DATA);
  
-    switch(change_data)
-    {
-      case 1:
+    if(a.change == 1)
+    {   
       write_array_to_eeprom(baud_rate_addr,baud_rate_array);
       write_array_to_eeprom(did_addr,did_array);
       write_array_to_eeprom(ch_no_addr,cid_array);
       write_array_to_eeprom(mode_addr,mode_array);
 //      write_array_to_eeprom(rid_addr,rid_array);  need to discuss.
       
-      change_data = 0;
-      break;
-      case 2:
+      a.change = 0;
+    }
+    else if(a.change == 0)
+    {
       write_array_to_eeprom(baud_rate_addr,"38400");
       write_array_to_eeprom(did_addr,"002");
       write_array_to_eeprom(ch_no_addr,"11");
       write_array_to_eeprom(mode_addr,"B");
 //      write_array_to_eeprom(rid_addr,rid_array); need to discuss.
-      break;
     }
 }
 

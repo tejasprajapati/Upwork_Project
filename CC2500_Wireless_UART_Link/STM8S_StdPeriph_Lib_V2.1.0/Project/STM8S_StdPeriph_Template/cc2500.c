@@ -7,7 +7,7 @@
 unsigned char response_aray[65];
 extern char rid_array[4],did_val;
 extern struct Comm_Parameters a;
-char register_addr[50] = {REG_IOCFG2,\
+static const char register_addr[47] = {REG_IOCFG2,\
                           REG_IOCFG1,\
                           REG_IOCFG0,\
                           REG_FIFOTHR,\
@@ -56,7 +56,7 @@ char register_addr[50] = {REG_IOCFG2,\
                           REG_TEST0
 };
 
-char register_value[50] = {VAL_IOCFG2,\
+static const char register_value[47] = {VAL_IOCFG2,\
                           VAL_IOCFG1,\
                           VAL_IOCFG0,\
                           VAL_FIFOTHR,\
