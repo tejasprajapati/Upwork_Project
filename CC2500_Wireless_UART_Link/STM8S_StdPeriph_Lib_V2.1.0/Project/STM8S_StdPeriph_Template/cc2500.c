@@ -5,18 +5,13 @@
 
 
 //unsigned char response_aray[65];
-extern char rid_array[4],did_val;
+extern char rid_array[4],mode_array[2],did_val;
 extern struct Comm_Parameters a;
-static const char register_addr[47] = {REG_IOCFG2,\
-                          REG_IOCFG1,\
-                          REG_IOCFG0,\
-                          REG_FIFOTHR,\
-                          REG_SYNC1,\
-                          REG_SYNC0,\
+static const char register_addr[20] = {REG_IOCFG0,\
+                          REG_POWER,\
                           REG_PKTLEN,\
                           REG_PKTCTRL1,\
                           REG_PKTCTRL0,\
-                          REG_ADDR,\
                           REG_CHANNR,\
                           REG_FSCTRL1,\
                           REG_FSCTRL0,\
@@ -26,46 +21,19 @@ static const char register_addr[47] = {REG_IOCFG2,\
                           REG_MDMCFG4,\
                           REG_MDMCFG3,\
                           REG_MDMCFG2,\
-                          REG_MDMCFG1,\
-                          REG_MDMCFG0,\
                           REG_DEVIATN,\
-                          REG_MCSM2,\
                           REG_MCSM1,\
                           REG_MCSM0,\
                           REG_FOCCFG,\
-                          REG_BSCFG,\
-                          REG_AGCCTRL2,\
-                          REG_AGCCTRL1,\
-                          REG_AGCCTRL0,\
-                          REG_WOREVT1,\
-                          REG_WOREVT0,\
-                          REG_WORCTRL,\
-                          REG_FREND1,\
-                          REG_FREND0,\
-                          REG_FSCAL3,\
-                          REG_FSCAL2,\
                           REG_FSCAL1,\
                           REG_FSCAL0,\
-                          REG_RCCTRL1,\
-                          REG_RCCTRL0,\
-                          REG_FSTEST,\
-                          REG_PTEST,\
-                          REG_AGCTEST,\
-                          REG_TEST2,\
-                          REG_TEST1,\
-                          REG_TEST0
 };
 
-static const char register_value[47] = {VAL_IOCFG2,\
-                          VAL_IOCFG1,\
-                          VAL_IOCFG0,\
-                          VAL_FIFOTHR,\
-                          VAL_SYNC1,\
-                          VAL_SYNC0,\
+static const char register_value[20] = {VAL_IOCFG0,\
+                          VAL_POWER,\
                           VAL_PKTLEN,\
                           VAL_PKTCTRL1,\
                           VAL_PKTCTRL0,\
-                          VAL_ADDR,\
                           VAL_CHANNR,\
                           VAL_FSCTRL1,\
                           VAL_FSCTRL0,\
@@ -75,35 +43,13 @@ static const char register_value[47] = {VAL_IOCFG2,\
                           VAL_MDMCFG4,\
                           VAL_MDMCFG3,\
                           VAL_MDMCFG2,\
-                          VAL_MDMCFG1,\
-                          VAL_MDMCFG0,\
                           VAL_DEVIATN,\
-                          VAL_MCSM2,\
                           VAL_MCSM1,\
                           VAL_MCSM0,\
                           VAL_FOCCFG,\
-                          VAL_BSCFG,\
-                          VAL_AGCCTRL2,\
-                          VAL_AGCCTRL1,\
-                          VAL_AGCCTRL0,\
-                          VAL_WOREVT1,\
-                          VAL_WOREVT0,\
-                          VAL_WORCTRL,\
-                          VAL_FREND1,\
-                          VAL_FREND0,\
-                          VAL_FSCAL3,\
-                          VAL_FSCAL2,\
                           VAL_FSCAL1,\
                           VAL_FSCAL0,\
-                          VAL_RCCTRL1,\
-                          VAL_RCCTRL0,\
-                          VAL_FSTEST,\
-                          VAL_PTEST,\
-                          VAL_AGCTEST,\
-                          VAL_TEST2,\
-                          VAL_TEST1,\
-                          VAL_TEST0
-};
+                          };
 
 void delay_ms(__IO uint32_t nTime) 
 {
@@ -185,9 +131,17 @@ void send_data_rf(char *data)
     
     if(a.data_received_from_UART)
     {
-      strncpy(rid_array,data,3);
-      rid_val = atoi(rid_array);
-      data_to_send[0] = length - 1 ;                                              // reducing the address bytes from the message length. 
+      if(mode_array[0] == 'A')
+      {
+         strncpy(rid_array,data,3);
+         length -= 3;
+         rid_val = atoi(rid_array);
+      }
+      else if(mode_array[0] == 'B')
+      {
+        rid_val = 255;
+      }
+      data_to_send[0] = length + 2;                                              // reducing the address bytes from the message length. 
       data_to_send[1] = rid_val;
       data_to_send[2] = did_val;
       strcat(data_to_send,(data+3));

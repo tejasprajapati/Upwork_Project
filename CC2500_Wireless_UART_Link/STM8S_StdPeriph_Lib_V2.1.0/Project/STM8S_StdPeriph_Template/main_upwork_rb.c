@@ -10,7 +10,9 @@
 #define default 0
 #define true 1
 #define false 0
-//#define command_mode switch_position
+//#define led_on         GPIO_WriteHigh(GPIOD,GPIO_PIN_2);
+//#define led_off        GPIO_WriteLow(GPIOD,GPIO_PIN_2);
+
 
 //unsigned int ack_received, command_mode, change;
 unsigned long baudrate,wait_count;
@@ -33,7 +35,7 @@ void spi_init(void);
 
 int main (void)
 {
-  clk_init();
+  CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);         //clk_init();
   gpio_init();
   write_data_to_eeprom();
 //  read_data_from_eeprom();
@@ -49,6 +51,7 @@ int main (void)
 //    Delay(5000);
     while(a.command_mode)
     {
+//      led_on;
       if(a.data_complete)
       {
         handle_uart_request(uart_rcv_buff);
@@ -57,6 +60,7 @@ int main (void)
         a.data_complete = 0;
       }
     }
+//    led_off;
     if(a.data_received_from_RF)
     {
         a.data_received_from_RF = 0;
@@ -84,16 +88,18 @@ int main (void)
   }
 }
 
-void clk_init(void)
-{
-    /*High speed internal clock prescaler: 1*/
-   CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
-}
+//void clk_init(void)
+//{
+//    /*High speed internal clock prescaler: 1*/
+////   CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
+//}
 
 void gpio_init(void)
 {
   GPIO_Init(GPIOC,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);                              /*GDO0 IT enable*/
-  GPIO_Init(GPIOD,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);                              /*Mode_switch*/
+//  GPIO_Init(GPIOD,GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST);                       /*Config_LED*/
+  GPIO_Init(GPIOD,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);                              /*Config_switch*/
+  
   
   EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOC, EXTI_SENSITIVITY_FALL_ONLY);       /*GDO0 Interrupt*/
   EXTI_SetExtIntSensitivity(EXTI_PORT_GPIOD, EXTI_SENSITIVITY_FALL_ONLY);       /*Mode_switch Interrupt*/
@@ -175,6 +181,40 @@ inline void send_ack(char * packet)       //format {length|dst_addr|send_addr|da
 //  cc2500_mode(1);
 }
 
+// -------------  old - start ----------------
+//void handle_uart_request(char * uart_req)
+//{
+//  char *ptr = NULL, edit = 0;
+//  
+////  check_for_parameter(uart_req);
+//  
+//  ptr = strstr(uart_req,"=");
+//  if(ptr != NULL)
+//  {
+//    edit = 1;
+//    check_for_parameter(uart_req , edit);
+//  }
+//  else
+//  {
+//     ptr = strstr(uart_req,"?");
+//     if(ptr != NULL)
+//     {
+//        check_for_parameter(uart_req , edit);
+//     }
+//     else
+//     {
+//        ptr = strstr(uart_req,"RST");
+//        if(ptr != NULL)
+//        {
+//          a.change = default;
+//        }
+//     }
+//  }
+//              
+//}
+// -------------  old - end ----------------
+
+//------------- new - start ----------------
 void handle_uart_request(char * uart_req)
 {
   char *ptr = NULL, edit = 0;
@@ -185,26 +225,27 @@ void handle_uart_request(char * uart_req)
   if(ptr != NULL)
   {
     edit = 1;
-    check_for_parameter(uart_req , edit);
   }
-  else
-  {
-     ptr = strstr(uart_req,"?");
-     if(ptr != NULL)
-     {
-        check_for_parameter(uart_req , edit);
-     }
-     else
-     {
-        ptr = strstr(uart_req,"RST");
-        if(ptr != NULL)
-        {
-          a.change = default;
-        }
-     }
-  }
-              
+  check_for_parameter(uart_req , edit);
+//  else
+//  {
+//     ptr = strstr(uart_req,"?");
+//     if(ptr != NULL)
+//     {
+//        check_for_parameter(uart_req , edit);
+//     }
+//     else
+//     {
+//        ptr = strstr(uart_req,"RST");
+//        if(ptr != NULL)
+//        {
+//          a.change = default;
+//        }
+//     }
+//  }              
 }
+
+//------------- new - end----------------
 
 //void check_for_parameter(char * parameter , char edit)                          //BR,CID,DID,RID,MODE,RST
 //{
