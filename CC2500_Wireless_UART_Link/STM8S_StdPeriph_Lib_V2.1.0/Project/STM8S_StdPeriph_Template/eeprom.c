@@ -19,7 +19,7 @@ void write_data_to_eeprom(void)
        strcpy(baud_rate_array,"38400");
        strcpy(did_array,"002");
        strcpy(cid_array,"11");
-       strcpy(mode_array,"B");
+       strcpy(mode_array,"A");
     }
       write_array_to_eeprom(baud_rate_addr,baud_rate_array);
       write_array_to_eeprom(did_addr,did_array);

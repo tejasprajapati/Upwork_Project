@@ -10,8 +10,8 @@
 #define default 0
 #define true 1
 #define false 0
-//#define led_on         GPIO_WriteHigh(GPIOD,GPIO_PIN_2);
-//#define led_off        GPIO_WriteLow(GPIOD,GPIO_PIN_2);
+#define led_on         GPIO_WriteHigh(GPIOD,GPIO_PIN_2);
+#define led_off        GPIO_WriteLow(GPIOD,GPIO_PIN_2);
 
 
 //unsigned int ack_received, command_mode, change;
@@ -51,16 +51,16 @@ int main (void)
 //    Delay(5000);
     while(a.command_mode)
     {
-//      led_on;
+      led_on;
       if(a.data_complete)
       {
         handle_uart_request(uart_rcv_buff);
         write_data_to_eeprom();
-//        read_data_from_eeprom();
+
         a.data_complete = 0;
       }
     }
-//    led_off;
+    led_off;
     if(a.data_received_from_RF)
     {
         a.data_received_from_RF = 0;
@@ -97,7 +97,7 @@ int main (void)
 void gpio_init(void)
 {
   GPIO_Init(GPIOC,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);                              /*GDO0 IT enable*/
-//  GPIO_Init(GPIOD,GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST);                       /*Config_LED*/
+  GPIO_Init(GPIOD,GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST);                       /*Config_LED*/
   GPIO_Init(GPIOD,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);                              /*Config_switch*/
   
   
@@ -170,14 +170,14 @@ inline char no_ack_msg(char *packet)
 
 inline void send_ack(char * packet)       //format {length|dst_addr|send_addr|data}
 {
-  char ack_msg[10];
-  memset(ack_msg,0x00,sizeof(ack_msg));
-  ack_msg[0] = *(packet + 1);          // address of sender need to get by other method this is wrong method.
-  ack_msg[1] = did_val;
-  strcat(ack_msg,"*ack*");
-  strcat(ack_msg,"\r");
-  send_data_rf(ack_msg);
-//  Delay(5000);
+//  char ack_msg[10];
+//  memset(ack_msg,0x00,sizeof(ack_msg));
+//  ack_msg[0] = *(packet + 1);          // address of sender need to get by other method this is wrong method.
+//  ack_msg[1] = did_val;
+//  strcat(ack_msg,"*ack*");
+//  strcat(ack_msg,"\r");
+//  send_data_rf(ack_msg);
+//  delay_ms(5000);
 //  cc2500_mode(1);
 }
 

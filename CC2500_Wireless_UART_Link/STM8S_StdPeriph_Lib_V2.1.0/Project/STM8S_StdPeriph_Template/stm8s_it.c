@@ -424,7 +424,7 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
     uart_rcv_buff[index] = 0x00;
     
 //    index = 0;
-    //command_mode = 1;  // temporary for testing
+    a.command_mode = 1;  // temporary for testing
     if(a.command_mode)
     {
 //      if(strncmp(uart_rcv_buff,"EXIT",4)==0)

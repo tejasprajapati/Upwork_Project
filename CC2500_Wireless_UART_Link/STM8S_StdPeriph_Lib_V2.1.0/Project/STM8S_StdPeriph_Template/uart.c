@@ -7,11 +7,8 @@ void uart_init(long baudrate)
 {
   switch(baudrate)
   {
-  case 4800:
   case 9600:
-  case 19200:
   case 38400:
-  case 57600:
   case 115200:
     break;
   default:

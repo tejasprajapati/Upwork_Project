@@ -49,17 +49,17 @@ void send_ack(char *);
 
 /***************************************************************/
 
-//#define REG_IOCFG2           0x00
-//#define REG_IOCFG1           0x01
+#define REG_IOCFG2           0x00
+#define REG_IOCFG1           0x01
 #define REG_IOCFG0           0x02
 #define REG_POWER            0x3E
-//#define REG_FIFOTHR          0x03
-//#define REG_SYNC1            0x04
-//#define REG_SYNC0            0x05
+#define REG_FIFOTHR          0x03
+#define REG_SYNC1            0x04
+#define REG_SYNC0            0x05
 #define REG_PKTLEN           0x32
 #define REG_PKTCTRL1         0x07
 #define REG_PKTCTRL0         0x08
-//#define REG_ADDR             0x09
+#define REG_ADDR             0x09
 #define REG_CHANNR           0x0A
 #define REG_FSCTRL1          0x0B
 #define REG_FSCTRL0          0x0C
@@ -69,34 +69,34 @@ void send_ack(char *);
 #define REG_MDMCFG4          0x10
 #define REG_MDMCFG3          0x11
 #define REG_MDMCFG2          0x12
-//#define REG_MDMCFG1          0x13
-//#define REG_MDMCFG0          0x14
+#define REG_MDMCFG1          0x13
+#define REG_MDMCFG0          0x14
 #define REG_DEVIATN          0x15
-//#define REG_MCSM2            0x16
+#define REG_MCSM2            0x16
 #define REG_MCSM1            0x17
 #define REG_MCSM0            0x18
 #define REG_FOCCFG           0x19
-//#define REG_BSCFG            0x1A
-//#define REG_AGCCTRL2         0x1B
-//#define REG_AGCCTRL1         0x1C
-//#define REG_AGCCTRL0         0x1D
-//#define REG_WOREVT1          0x1E
-//#define REG_WOREVT0          0x1F
-//#define REG_WORCTRL          0x20
-//#define REG_FREND1           0x21
-//#define REG_FREND0           0x22
-//#define REG_FSCAL3           0x23
-//#define REG_FSCAL2           0x24
+#define REG_BSCFG            0x1A
+#define REG_AGCCTRL2         0x1B
+#define REG_AGCCTRL1         0x1C
+#define REG_AGCCTRL0         0x1D
+#define REG_WOREVT1          0x1E
+#define REG_WOREVT0          0x1F
+#define REG_WORCTRL          0x20
+#define REG_FREND1           0x21
+#define REG_FREND0           0x22
+#define REG_FSCAL3           0x23
+#define REG_FSCAL2           0x24
 #define REG_FSCAL1           0x25
 #define REG_FSCAL0           0x26
-//#define REG_RCCTRL1          0x27
-//#define REG_RCCTRL0          0x28
-//#define REG_FSTEST           0x29
-//#define REG_PTEST            0x2A
-//#define REG_AGCTEST          0x2B
-//#define REG_TEST2            0x2C
-//#define REG_TEST1            0x2D
-//#define REG_TEST0            0x2E
+#define REG_RCCTRL1          0x27
+#define REG_RCCTRL0          0x28
+#define REG_FSTEST           0x29
+#define REG_PTEST            0x2A
+#define REG_AGCTEST          0x2B
+#define REG_TEST2            0x2C
+#define REG_TEST1            0x2D
+#define REG_TEST0            0x2E
 /*
 #define REG_PARTNUM          0x30
 #define REG_VERSION          0x31
@@ -166,17 +166,17 @@ void send_ack(char *);
 
 
 /**************************************************************************/
-//#define VAL_IOCFG2           0x29//default chip ready
-//#define VAL_IOCFG1           0x2E//default high impedence
+#define VAL_IOCFG2           0x29//default chip ready
+#define VAL_IOCFG1           0x2E//default high impedence
 #define VAL_IOCFG0           0x06// 0x06Asserts when word has sent/receive,de-asserts at end.In RX, pin will de-assert when address check fails or  RX FIFO overflows. In TX pin will de-assert if TX FIFO underflows.
 #define VAL_POWER            0xfe// power value for RF operation.   
-//#define VAL_FIFOTHR          0x07//33/32 in TX/RX
-//#define VAL_SYNC1            0xD3//default 8 MSB
-//#define VAL_SYNC0            0x91//default 8 LSB
+#define VAL_FIFOTHR          0x07//33/32 in TX/RX
+#define VAL_SYNC1            0xD3//default 8 MSB
+#define VAL_SYNC0            0x91//default 8 LSB
 #define VAL_PKTLEN           0x0C//6 length packet
 #define VAL_PKTCTRL1         0x04//0x04 no addres check      // add address check and 0x00 broadcast (0x06)
 #define VAL_PKTCTRL0         0x05// 0x04whitening off,CRC on, fix packet //variable packet length req.(0x05)
-//#define VAL_ADDR             0x00//default no address      // address check required.(get did in it)
+#define VAL_ADDR             0x00//default no address      // address check required.(get did in it)
 #define VAL_CHANNR           0x00//default channel no 0    // channel no. required to be add from the cid.
 #define VAL_FSCTRL1          0x08//IF freq 199.95
 #define VAL_FSCTRL0          0x00//default freq offset
@@ -186,34 +186,34 @@ void send_ack(char *);
 #define VAL_MDMCFG4          0x86//BW 203k 0x8E
 #define VAL_MDMCFG3          0x83//data rate 2.3989k change to 500.0 k baud rate 0x3B
 #define VAL_MDMCFG2          0x03//30/32 detect 2-FSK
-//#define VAL_MDMCFG1          0x22//default 4 preamble
-//#define VAL_MDMCFG0          0xF8//default 199.95 spacing
+#define VAL_MDMCFG1          0x22//default 4 preamble
+#define VAL_MDMCFG0          0xF8//default 199.95 spacing
 #define VAL_DEVIATN          0x44//deviation 38.085k
-//#define VAL_MCSM2            0x07//default time out untill packet end
+#define VAL_MCSM2            0x07//default time out untill packet end
 #define VAL_MCSM1            0x30//0x2B//0x30//default If RSSI below threshold unless currently receiving packet  // ronak
 #define VAL_MCSM0            0x18//64 expire , IDLE to TX/RX
 #define VAL_FOCCFG           0x16//gate disable
-//#define VAL_BSCFG            0x6c//default
-//#define VAL_AGCCTRL2         0x03//default 33 db
-//#define VAL_AGCCTRL1         0x40//default relative carrier sense disable
-//#define VAL_AGCCTRL0         0x91//default normal operation, channel filter sample 16
-//#define VAL_WOREVT1          0x87//default 876B=34667 appx. 1 s time out
-//#define VAL_WOREVT0          0x6B//default 1 s time out
-//#define VAL_WORCTRL          0xF8//default RC calibration on
-//#define VAL_FREND1           0x56//default
-//#define VAL_FREND0           0x10//default
-//#define VAL_FSCAL3           0xA9//default
-//#define VAL_FSCAL2           0x0A//default
+#define VAL_BSCFG            0x6c//default
+#define VAL_AGCCTRL2         0x03//default 33 db
+#define VAL_AGCCTRL1         0x40//default relative carrier sense disable
+#define VAL_AGCCTRL0         0x91//default normal operation, channel filter sample 16
+#define VAL_WOREVT1          0x87//default 876B=34667 appx. 1 s time out
+#define VAL_WOREVT0          0x6B//default 1 s time out
+#define VAL_WORCTRL          0xF8//default RC calibration on
+#define VAL_FREND1           0x56//default
+#define VAL_FREND0           0x10//default
+#define VAL_FSCAL3           0xA9//default
+#define VAL_FSCAL2           0x0A//default
 #define VAL_FSCAL1           0x00//
 #define VAL_FSCAL0           0x11//
-//#define VAL_RCCTRL1          0x41//default
-//#define VAL_RCCTRL0          0x00//default
-//#define VAL_FSTEST           0x59//default
-//#define VAL_PTEST            0x7F//default
-//#define VAL_AGCTEST          0x3F//default
-//#define VAL_TEST2            0x88//default
-//#define VAL_TEST1            0x31//default
-//#define VAL_TEST0            0x0B//default
+#define VAL_RCCTRL1          0x41//default
+#define VAL_RCCTRL0          0x00//default
+#define VAL_FSTEST           0x59//default
+#define VAL_PTEST            0x7F//default
+#define VAL_AGCTEST          0x3F//default
+#define VAL_TEST2            0x88//default
+#define VAL_TEST1            0x31//default
+#define VAL_TEST0            0x0B//default
 /*********************************************************************/
 /*
 #define VAL_PARTNUM          0x80//default
