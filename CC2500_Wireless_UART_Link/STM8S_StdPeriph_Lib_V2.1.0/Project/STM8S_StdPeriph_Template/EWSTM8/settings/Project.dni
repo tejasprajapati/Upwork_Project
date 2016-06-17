@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=414816978
+Checksum=-1679827377
 [CallStack]
 ShowArgs=0
 [Disassembly]
@@ -30,10 +30,7 @@ Category=_ 0
 LoggingEnabled=_ 0
 LogFile=_ ""
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\stm8s_it.c}.173.5" 1 0 0 0 "" 0 ""
-Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\main_upwork_rb.c}.57.9" 1 0 0 0 "" 0 ""
-Bp2=_ "STD_CODE" "{$PROJ_DIR$\..\stm8s_it.c}.436.9" 1 0 0 0 "" 0 ""
-Count=3
+Count=0
 [Aliases]
 Count=0
 SuppressDialog=0

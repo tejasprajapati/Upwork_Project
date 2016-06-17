@@ -158,7 +158,7 @@ INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
 {
   if((GPIO_ReadInputData(GPIOC) & GPIO_PIN_3) == 0x00)                            /*GDO0 interrupt pin*/
   {
-    char i,rx_length = 0;
+    char i = 0, rx_length = 0, length = 0;
     char crc_check_buff[MAX_BUF_SIZE];
     memset(Uart_send_buff, 0, MAX_BUF_SIZE);						/* clearing the array.*/
     memset(crc_check_buff, 0, MAX_BUF_SIZE);						/* clearing the array.*/
@@ -167,10 +167,16 @@ INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
     for (i = 0; i < rx_length ; i++) 							/* Reading the data from the fifo*/
     {
       Uart_send_buff[i] = Read(CC2500_RXFIFO);
+      if(Uart_send_buff[i] == '\r' && a.first_time == 0)
+      {
+        a.first_time = 1;
+        length = i + 2;
+      }
     }
-    
-    crc_check_buff[0] = rx_length;
-    strcat(crc_check_buff, Uart_send_buff);
+
+    a.first_time = 0;
+    Uart_send_buff[length + 1] = 0x00;
+    strcpy(crc_check_buff, Uart_send_buff);
     
     if(crc_ok(crc_check_buff, strlen(crc_check_buff)))
     {
@@ -188,8 +194,11 @@ INTERRUPT_HANDLER(EXTI_PORTC_IRQHandler, 5)
     }
     
     SendStrobe(CC2500_IDLE);
-    SendStrobe(CC2500_FRX);    
+    delay_ms(5);
+    SendStrobe(CC2500_FRX);
+    delay_ms(5);
     SendStrobe(CC2500_RX);
+    delay_ms(5);
   }
   
   /* In order to detect unexpected events during development,
@@ -424,7 +433,7 @@ INTERRUPT_HANDLER(TIM1_CAP_COM_IRQHandler, 12)
     uart_rcv_buff[index] = 0x00;
     
 //    index = 0;
-    a.command_mode = 1;  // temporary for testing
+//    a.command_mode = 1;  // temporary for testing
     if(a.command_mode)
     {
 //      if(strncmp(uart_rcv_buff,"EXIT",4)==0)

@@ -8,7 +8,7 @@
 extern char rid_array[4],mode_array[2],did_val;
 extern struct Comm_Parameters a;
 
-static const char register_addr[20] = { REG_IOCFG0,\
+static const char register_addr[21] = { REG_IOCFG0,\
                                         REG_POWER,\
                                         REG_PKTLEN,\
                                         REG_PKTCTRL1,\
@@ -28,9 +28,10 @@ static const char register_addr[20] = { REG_IOCFG0,\
                                         REG_FOCCFG,\
                                         REG_FSCAL1,\
                                         REG_FSCAL0,\
+                                        REG_FIFOTHR,\
 };
 
-static const char register_value[20] = {  VAL_IOCFG0,\
+static const char register_value[21] = {  VAL_IOCFG0,\
                                           VAL_POWER,\
                                           VAL_PKTLEN,\
                                           VAL_PKTCTRL1,\
@@ -50,6 +51,7 @@ static const char register_value[20] = {  VAL_IOCFG0,\
                                           VAL_FOCCFG,\
                                           VAL_FSCAL1,\
                                           VAL_FSCAL0,\
+                                          VAL_FIFOTHR,\
 
 };
 
@@ -111,7 +113,7 @@ char SendStrobe(char strobe)
 
 	ss_high;	// hi
         
-        delay_ms(10);
+//        delay_ms(10);
 	return out;
         
 }
@@ -127,7 +129,7 @@ void cc2500_mode(char mode)
 }
 void send_data_rf(char *data) 
 {               //{length|dst_addr|send_addr|data|crc}   // from code only send address(3 btyes) + data.
-    char data_to_send[50], i, length = strlen(data),rid_val;
+    char data_to_send[MAX_BUF_SIZE], i, length = strlen(data),rid_val;
  //   char length = strlen(data_to_send);
     memset(data_to_send,0x00,sizeof(data_to_send));
     
@@ -139,15 +141,15 @@ void send_data_rf(char *data)
         rid_array[0] = *data;
         rid_array[1] = *(data + 1);
         rid_array[2] = *(data + 2);
-        length -= 3;
+//        length -= 1;
         rid_val = atoi(rid_array);
       }
       else if(mode_array[0] == 'B')
       {
         rid_val = 255;
-        length -= 3;
+//        length -= 3;
       }
-      data_to_send[0] = length + 2;                                              // reducing the address bytes from the message length. 
+      data_to_send[0] = length - 1;                                              // reducing the address bytes from the message length. 
       data_to_send[1] = rid_val;
       data_to_send[2] = did_val;
       strcat(data_to_send,(data+3));
@@ -159,11 +161,11 @@ void send_data_rf(char *data)
     }
 
     SendStrobe(CC2500_IDLE);                                                    /*Make sure that the radio is in IDLE state before flushing the FIFO*/
-//    delay_ms(5);
+    delay_ms(5);
     SendStrobe(CC2500_FTX);                                                     /*Flush TX FIFO*/
-//    delay_ms(5);
+    delay_ms(5);
     SendStrobe(CC2500_IDLE);	                                                /*SIDLE: exit RX/TX*/
-//    delay_ms(5);
+    delay_ms(5);
 
     for (i = 0; i < length; i++) 
     {
@@ -177,7 +179,7 @@ void send_data_rf(char *data)
     while(GPIOC->IDR & GPIO_PIN_3);                                             /*Wait for GDO0 to be cleared -> end of packet*/	
     GPIO_Init(GPIOC,GPIO_PIN_3, GPIO_MODE_IN_PU_IT);                              /*GDO0 IT enable*/
 //    delay_ms(5000);
-    cc2500_mode(1);
+//    cc2500_mode(1);
 }
 
 void init_CC2500(void)

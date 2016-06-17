@@ -71,17 +71,17 @@ int main (void)
         int crc_got = 0;
         char length = strlen(RF_send_buff);
         a.ack_received = 0;
-        crc_got = check_crc(RF_send_buff, length);
+        crc_got = check_crc(RF_send_buff+3, length - 3);
         RF_send_buff[length] = ((crc_got & 0xFF00) >> 8);
         RF_send_buff[length + 1] = (crc_got & 0x00FF);
         send_data_rf(RF_send_buff);
-//        cc2500_mode(1);
+        cc2500_mode(1);
         
         wait_count = 0;
         while((a.ack_received == 0) && wait_count++ <= 99999 );  // during testing received ack within 10000 count.//rb
         if(wait_count >= 99999)
         send_data_rf(RF_send_buff);
-//        cc2500_mode(1);
+        cc2500_mode(1);
         
         a.data_received_from_UART = 0;
     }
@@ -128,7 +128,7 @@ inline char crc_ok(char * packet, int length)
   int rcvd_crc = packet[length - 2 ];
   rcvd_crc = rcvd_crc << 8;
   rcvd_crc |= packet[length - 1];
-  int calc_crc = check_crc(packet, length - sizeof(rcvd_crc));
+  int calc_crc = check_crc(packet + 2, length - 4);
   
   if(rcvd_crc == calc_crc)
     return true;
@@ -170,51 +170,17 @@ inline char no_ack_msg(char *packet)
 
 inline void send_ack(char * packet)       //format {length|dst_addr|send_addr|data}
 {
-//  char ack_msg[10];
-//  memset(ack_msg,0x00,sizeof(ack_msg));
-//  ack_msg[0] = *(packet + 1);          // address of sender need to get by other method this is wrong method.
-//  ack_msg[1] = did_val;
-//  strcat(ack_msg,"*ack*");
-//  strcat(ack_msg,"\r");
-//  send_data_rf(ack_msg);
-//  delay_ms(5000);
-//  cc2500_mode(1);
+  char ack_msg[10];
+  memset(ack_msg,0x00,sizeof(ack_msg));
+  ack_msg[0] = *(packet + 1);          // address of sender need to get by other method this is wrong method.
+  ack_msg[1] = did_val;
+  strcat(ack_msg,"*ack*");
+  strcat(ack_msg,"\r");
+  send_data_rf(ack_msg);
+  delay_ms(5000);
+  cc2500_mode(1);
 }
 
-// -------------  old - start ----------------
-//void handle_uart_request(char * uart_req)
-//{
-//  char *ptr = NULL, edit = 0;
-//  
-////  check_for_parameter(uart_req);
-//  
-//  ptr = strstr(uart_req,"=");
-//  if(ptr != NULL)
-//  {
-//    edit = 1;
-//    check_for_parameter(uart_req , edit);
-//  }
-//  else
-//  {
-//     ptr = strstr(uart_req,"?");
-//     if(ptr != NULL)
-//     {
-//        check_for_parameter(uart_req , edit);
-//     }
-//     else
-//     {
-//        ptr = strstr(uart_req,"RST");
-//        if(ptr != NULL)
-//        {
-//          a.change = default;
-//        }
-//     }
-//  }
-//              
-//}
-// -------------  old - end ----------------
-
-//------------- new - start ----------------
 void handle_uart_request(char * uart_req)
 {
   char *ptr = NULL, edit = 0;
@@ -226,90 +192,9 @@ void handle_uart_request(char * uart_req)
   {
     edit = 1;
   }
-  check_for_parameter(uart_req , edit);
-//  else
-//  {
-//     ptr = strstr(uart_req,"?");
-//     if(ptr != NULL)
-//     {
-//        check_for_parameter(uart_req , edit);
-//     }
-//     else
-//     {
-//        ptr = strstr(uart_req,"RST");
-//        if(ptr != NULL)
-//        {
-//          a.change = default;
-//        }
-//     }
-//  }              
+  check_for_parameter(uart_req , edit);            
 }
 
-//------------- new - end----------------
-
-//void check_for_parameter(char * parameter , char edit)                          //BR,CID,DID,RID,MODE,RST
-//{
-//    if(strncmp(parameter,"AT+BR",5) == 0)                                       /*Baudrate*/
-//    { 
-//      if(edit)
-//      {
-//        strcpy(baud_rate_array,parameter + 6);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(baud_rate_array);
-//      }
-//    }
-//    else if(strncmp(parameter,"AT+CID",6)==0)                                   /*Channel ID*/
-//    {
-//      if(edit)
-//      {
-//        strcpy(cid_array,parameter + 7);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(cid_array);
-//      }
-//    }
-//    else if(strncmp(parameter,"AT+DID",6)==0)                                   /*Device ID*/
-//    {
-//      if(edit)
-//      {
-//        strcpy(did_array,parameter + 7);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(did_array);
-//      }
-//    }
-//    else if(strncmp(parameter,"AT+RID",6)==0)                                   /*Remote ID*/
-//    {
-//      if(edit)
-//      {
-//        strcpy(rid_array,parameter + 7);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(rid_array);
-//      }
-//    } 
-//    else if(strncmp(parameter,"AT+MODE",7)==0)
-//    {
-//      if(edit)
-//      {
-//        strcpy(mode_array,parameter + 8);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(mode_array);
-//      }
-//    } 
-//}
 
 void check_for(char * parameter , char edit,char * value, char * array_to_save)
 {
@@ -330,80 +215,12 @@ void check_for(char * parameter , char edit,char * value, char * array_to_save)
 }
 void check_for_parameter(char * parameter , char edit)                          //BR,CID,DID,RID,MODE,RST
 {
-//  char i = 0;
-//  char *data[] = {"AT+BR","AT+CID","AT+DID","AT+RID","AT+MODE",NULL};
-//  char *pointer_array[] = {*baud_rate_array,*cid_array,*did_array,*rid_array,*mode_array};
-//  for(i = 0;*data[i]!=NULL;i++)                                                 //2nd phase optimization
-//  {
-//      check_for(parameter,edit,*data[i],*pointer_array[i]);
-//  }
     check_for(parameter,edit,"AT+BR",baud_rate_array);                        //1st phase of optimization
     check_for(parameter,edit,"AT+CID",cid_array);
     check_for(parameter,edit,"AT+DID",did_array);
     check_for(parameter,edit,"AT+RID",rid_array);
     check_for(parameter,edit,"AT+MODE",mode_array);
 
-  
-//    if(strncmp(parameter,"AT+BR",5) == 0)                                       /*Baudrate*/
-//    { 
-//      if(edit)
-//      {
-//        strcpy(baud_rate_array,parameter + 6);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(baud_rate_array);
-//      }
-//    }
-//    else if(strncmp(parameter,"AT+CID",6)==0)                                   /*Channel ID*/
-//    {
-//      if(edit)
-//      {
-//        strcpy(cid_array,parameter + 7);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(cid_array);
-//      }
-//    }
-//    else if(strncmp(parameter,"AT+DID",6)==0)                                   /*Device ID*/
-//    {
-//      if(edit)
-//      {
-//        strcpy(did_array,parameter + 7);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(did_array);
-//      }
-//    }
-//    else if(strncmp(parameter,"AT+RID",6)==0)                                   /*Remote ID*/
-//    {
-//      if(edit)
-//      {
-//        strcpy(rid_array,parameter + 7);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(rid_array);
-//      }
-//    } 
-//    else if(strncmp(parameter,"AT+MODE",7)==0)
-//    {
-//      if(edit)
-//      {
-//        strcpy(mode_array,parameter + 8);
-//        a.change = 1;
-//      }
-//      else
-//      {
-//        send_data_uart(mode_array);
-//      }
-//    } 
 }
 
 #ifdef USE_FULL_ASSERT

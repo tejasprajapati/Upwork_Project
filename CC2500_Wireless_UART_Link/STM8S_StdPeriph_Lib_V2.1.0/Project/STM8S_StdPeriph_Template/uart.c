@@ -28,8 +28,11 @@ void uart_init(long baudrate)
 
 void send_data_uart(char *uart_send_buff)
 {
+  char length = strlen(uart_send_buff);
   index = 0;
-  strcat(uart_send_buff,"\n");
+  *(uart_send_buff + length - 2) = '\n';
+  *(uart_send_buff + length - 1) = '\0';
+//  strcat(uart_send_buff,"\n");
   while(uart_send_buff[index] != '\0')
   {
       UART1_SendData8(uart_send_buff[index]);

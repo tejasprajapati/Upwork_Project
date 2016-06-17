@@ -18,6 +18,7 @@ struct Comm_Parameters                                                          
   unsigned ack_received : 1;
   unsigned command_mode : 1;
   unsigned change : 1;
+  unsigned first_time : 1;
 };
 
 int check_crc(char const *, int);                                               /*Function to check the CRC*/
