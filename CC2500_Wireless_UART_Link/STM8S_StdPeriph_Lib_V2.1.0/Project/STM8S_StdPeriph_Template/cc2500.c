@@ -5,7 +5,7 @@
 
 
 //unsigned char response_aray[100];
-extern char rid_array[4],mode_array[2],did_val;
+extern char rid_array[4],mode_array[2],did_val, cid_val;
 extern struct Comm_Parameters a;
 
 static const char register_addr[21] = { REG_IOCFG0,\
@@ -187,6 +187,7 @@ void init_CC2500(void)
   char i;
   for(i = 0; i < sizeof(register_addr); i++)
     WriteReg(register_addr[i], register_value[i]);
+  WriteReg(REG_CHANNR, cid_val);
 //	WriteReg(REG_IOCFG2, VAL_IOCFG2);
 //	WriteReg(REG_IOCFG1, VAL_IOCFG1);
 //	WriteReg(REG_IOCFG0, VAL_IOCFG0);

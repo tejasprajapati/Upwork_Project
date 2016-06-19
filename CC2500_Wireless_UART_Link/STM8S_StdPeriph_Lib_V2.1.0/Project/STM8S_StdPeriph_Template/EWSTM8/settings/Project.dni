@@ -9,14 +9,17 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=1482739792
+Checksum=1556699064
 [CallStack]
 ShowArgs=0
 [Disassembly]
 MixedMode=1
+[BreakpointUsageDialog]
+Placement=_ 738 379 1183 661
 [watch_formats]
-Fmt0={W}0:crc_got	4	0
-Fmt1={W}0:rcvd_crc	4	0
+Fmt0={W}0:cid_val	3	0
+Fmt1={W}0:crc_got	4	0
+Fmt2={W}0:rcvd_crc	4	0
 [DataSample]
 LogEnabled=0
 GraphEnabled=0
@@ -31,9 +34,8 @@ LoggingEnabled=_ 0
 LogFile=_ ""
 [Breakpoints]
 Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\stm8s_it.c}.433.5" 1 0 0 0 "" 0 ""
-Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\main_upwork_rb.c}.73.9" 1 0 0 0 "" 0 ""
-Bp2=_ "STD_CODE" "{$PROJ_DIR$\..\stm8s_it.c}.179.5" 1 0 0 0 "" 0 ""
-Count=3
+Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\stm8s_it.c}.179.5" 1 0 0 0 "" 0 ""
+Count=2
 [Aliases]
 Count=0
 SuppressDialog=0

@@ -17,6 +17,7 @@
 //unsigned int ack_received, command_mode, change;
 unsigned long baudrate,wait_count;
 char baud_rate_array[8],did_array[5],cid_array[4],rid_array[4],mode_array[2],did_val;
+char cid_val = 0;
 char RF_send_buff[MAX_BUF_SIZE];
 char Uart_send_buff[MAX_BUF_SIZE];
 char uart_rcv_buff[MAX_BUF_SIZE];
@@ -38,7 +39,7 @@ int main (void)
   CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);         //clk_init();
   gpio_init();
   write_data_to_eeprom();
-//  read_data_from_eeprom();
+  read_data_from_eeprom();
   uart_init(baudrate);
   spi_init();
   setup();              // configure the cc2500 in required format.
